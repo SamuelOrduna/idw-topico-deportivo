@@ -9,6 +9,9 @@ Luis Eduardo Suarez Arroyo - 202717
 
 Carlos Lugo Torres - 207647
 
-## Proceso de elaboración del diseño
+## Proyecto elegido
+### Objetivo
 
-## Proceso de elaboración del funcionamiento
+# Proceso de elaboración del diseño
+
+# Proceso de elaboración del funcionamiento
