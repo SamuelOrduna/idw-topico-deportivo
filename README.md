@@ -25,7 +25,7 @@ El proceso del diseño se inició eligiendo los colores que se usarían en la p�
 
 Basándonos en la siguiente imagen, se eligieron los colores rojo, blanco y negro.
 
-<img src="imagenesPagina/psicologiaColores.png" width="500" alt="Imagen mostrando significado de los colores en la psicología">
+<img src="imagenesPagina/psicologiaColores.png" width="500" alt="Imagen mostrando significado de los colores en la psicología"  style="display: block; margin: auto;">
 
 Justificación de la decisión: 
 - <strong>Rojo:</strong> Es un color potente y dinámico que proyecta pasión y urgencia. Se usó para incentivar la pasión de los fanáticos de los deportes y fomentar la urgencia de consultar los calendarios y resultados de los eventos más esperados. Además, el rojo tiene la capacidadad de destacar elementos clave en nuestro diseño, como tipo de deporte o botones relevantes, guiando la atención del usuario a la información de interés. 
