@@ -38,21 +38,21 @@ Los diseños de inspiración (en modo claro) fueron los siguientes:
 
 Inspiración eventos (pantalla principal)
 
-<div style="text-align: center;">
+<p align="center">
     <img src="imagenesPagina/inspiracionEventos.jpeg" width="500" alt="Imagen inspiración diseño para eventos (pantalla principal)">
-</div>
+</p>
 
 Inspiración estadísticas
 
-<div style="text-align: center;">
+<p align="center">
     <img src="imagenesPagina/inspiracionEstadisticas.jpeg" width="500" alt="Imagen inspiración diseño para estadísticas">
-</div>
+</p>
 
 Inspiración calendario
 
-<div style="text-align: center;">
+<p align="center">
     <img src="imagenesPagina/inspiracionCalendario.jpeg" width="500" alt="Imagen inspiración diseño para calendario">
-</div>
+</p>
 
 ## Proceso elaboración eventos
 
