@@ -19,6 +19,12 @@ Las características técnicas de la página son las siguientes:
 - Gráficas con rendimiento o asistencia por equipo
 
 ### Objetivo
+El objetivo del proyecto es incorporar los temas vistos en clase y reforzar las habilidades adquiridas. Específicamente, se busca incorporar temas como:
+- Responsividad de una página web usando Bootstrap 5.3.8
+- Manejo de APIs mediante fetch
+- Manejo de visualización de datos
+- Aplicar los fundamentos de HTML semántico y la estructura de documentación 
+- Programación de interactividad mediante el uso de JavaScript
 
 # Proceso de elaboración del diseño
 El proceso del diseño se inició eligiendo los colores que se usarían en la página web. Para ello, se investigó sobre la psicología de los colores, pues buscamos que nuestra página sea atractiva para los aficionados del deporte. 
@@ -27,6 +33,7 @@ Basándonos en la siguiente imagen, se eligieron los colores rojo, blanco y negr
 <p align="center">
     <img src="imagenesPagina/psicologiaColores.png" width="500" alt="Imagen mostrando significado de los colores en la psicología">
 </p>
+
 Justificación de la decisión: 
 - <strong>Rojo:</strong> Es un color potente y dinámico que proyecta pasión y urgencia. Se usó para incentivar la pasión de los fanáticos de los deportes y fomentar la urgencia de consultar los calendarios y resultados de los eventos más esperados. Además, el rojo tiene la capacidadad de destacar elementos clave en nuestro diseño, como tipo de deporte o botones relevantes, guiando la atención del usuario a la información de interés. 
 - <strong>Blanco:</strong> Este color se eligió con el fin de representar la limpieza y lograr una visión ordenada y amigable a la vista de los usuarios. El blanco también actúa como un espacio de respiro entre elementos más intensos, equilibrando la composición y reforzando la accesibilidad del sitio.
