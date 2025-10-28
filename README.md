@@ -24,9 +24,9 @@ Las características técnicas de la página son las siguientes:
 El proceso del diseño se inició eligiendo los colores que se usarían en la página web. Para ello, se investigó sobre la psicología de los colores, pues buscamos que nuestra página sea atractiva para los aficionados del deporte. 
 
 Basándonos en la siguiente imagen, se eligieron los colores rojo, blanco y negro.
-
-<img src="imagenesPagina/psicologiaColores.png" width="500" alt="Imagen mostrando significado de los colores en la psicología"  style="display: block; margin: auto;">
-
+<p align="center">
+    <img src="imagenesPagina/psicologiaColores.png" width="500" alt="Imagen mostrando significado de los colores en la psicología">
+</p>
 Justificación de la decisión: 
 - <strong>Rojo:</strong> Es un color potente y dinámico que proyecta pasión y urgencia. Se usó para incentivar la pasión de los fanáticos de los deportes y fomentar la urgencia de consultar los calendarios y resultados de los eventos más esperados. Además, el rojo tiene la capacidadad de destacar elementos clave en nuestro diseño, como tipo de deporte o botones relevantes, guiando la atención del usuario a la información de interés. 
 - <strong>Blanco:</strong> Este color se eligió con el fin de representar la limpieza y lograr una visión ordenada y amigable a la vista de los usuarios. El blanco también actúa como un espacio de respiro entre elementos más intensos, equilibrando la composición y reforzando la accesibilidad del sitio.
