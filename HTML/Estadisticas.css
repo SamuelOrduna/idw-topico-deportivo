@@ -1,0 +1,236 @@
+/**************************************************/
+/**********Definimos el modo oscuro****************/
+/*************************************************/
+body.theme-dark .table-ranking thead th,
+body.theme-dark .table-ranking tbody td {
+    color: #000 !important;
+    /*sobrescribir color de texto en modo oscuro*/
+}
+
+:root {
+    /*************************************/
+    /**Paleta de colores para tema claro**/
+    /*************************************/
+    /*Colores base*/
+    --brand-red: #e50914;
+    --bg: #f6f7f9;
+    --text: #111;
+    --muted: #6b7280;
+
+    /*fondo degradado para la cabecera principal*/
+    --hero-start: #0f0f10;
+    --hero-end: #141416;
+
+    /*Definimos estilo de las cards*/
+    --card: #ffffff;
+    --card-border: #eaecf0;
+    --card-border-2: #eef0f3;
+    --chip: #f1f2f4;
+    --btn-ghost-bg: #ffffff;
+    --btn-ghost-bd: #e5e7eb;
+    --btn-ghost-bd-hover: #d1d5db;
+
+    --input-bg: #ffffff;
+    --input-bd: #e5e7eb;
+    --input-bd-focus: #d1d5db;
+
+    /*componentes (estilos) de las tablas*/
+    --table-head: #6b7280;
+    --table-border: #f0f2f5;
+
+    /* Graficas para tema claro*/
+    --bar-1: rgba(229, 9, 20, .85);
+    --bar-2: rgba(17, 17, 17, .85);
+    --grid: #e5e7eb;
+    --legend: #111;
+}
+
+/**************************************/
+/**Paleta de colores para tema oscuro**/
+/**************************************/
+body.theme-dark {
+    --bg: #0e0f11;
+    --text: #f7f7f7;
+    --muted: #a9b0b8;
+
+    /*fondo de cabeceera tipo heroe*/
+    --hero-start: #0b0c0e;
+    --hero-end: #111216;
+
+    /*Definimos estilo de las cards*/
+    --card: #15171b;
+    --card-border: #252830;
+    --card-border-2: #23262d;
+
+    --chip: #1e2127;
+
+    --btn-ghost-bg: #1a1c21;
+    --btn-ghost-bd: #2a2d36;
+    --btn-ghost-bd-hover: #3a3e49;
+
+    --input-bg: #16181d;
+    --input-bd: #2a2d36;
+    --input-bd-focus: #3a3e49;
+
+    /*componentes (estilos) de las tablas*/
+    --table-head: #9aa3ad;
+    --table-border: #2a2d36;
+
+    /* Graficas para tema claro*/
+    --bar-1: rgba(229, 9, 20, .9);
+    --bar-2: rgba(240, 240, 240, .9);
+    --grid: #2a2d36;
+    --legend: #f7f7f7;
+}
+
+
+/**************************************/
+/**Definimos estilos de los elementos**/
+/**************************************/
+html,
+body {
+    height: 100%
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* Header */
+.hero {
+    background: linear-gradient(180deg, var(--hero-start) 0%, var(--hero-end) 100%);
+    color: #fff;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+
+/**************************************/
+/****Tabs superiores de navegación*****/
+/**************************************/
+.top-tabs .btn {
+    border-radius: .75rem;
+    font-weight: 600;
+}
+
+.top-tabs .btn.active {
+    background: #1f1f22;
+    color: #fff;
+    border-color: #1f1f22;
+}
+
+.top-tabs .btn:not(.active) {
+    background: var(--btn-ghost-bg);
+    color: var(--text);
+    border-color: var(--btn-ghost-bd);
+}
+
+.top-tabs .btn:not(.active):hover {
+    border-color: var(--btn-ghost-bd-hover);
+}
+
+.top-tabs .btn .bi {
+    margin-right: .5rem;
+}
+
+/**************************************/
+/***Estilos de las tarjetas (cards)****/
+/**************************************/
+.card-raised {
+    border: 1px solid var(--card-border);
+    border-radius: 1rem;
+    background: var(--card);
+}
+
+.card-raised .card-header {
+    background: var(--card);
+    border-bottom: 1px solid var(--card-border-2);
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+}
+
+
+/**************************************/
+/****Estilos de los chips (tags)*******/
+/**************************************/
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .375rem .75rem;
+    border-radius: .75rem;
+    background: var(--chip);
+    color: var(--text);
+    font-weight: 600;
+    font-size: .875rem;
+}
+
+.chip .bi {
+    color: var(--brand-red);
+}
+
+/**************************************/
+/****Estilos de los inputs (campos)****/
+/**************************************/
+.input-light .input-group-text {
+    background: var(--input-bg);
+    border-color: var(--input-bd);
+    color: var(--muted);
+}
+
+.input-light .form-control,
+.input-light .form-select {
+    background: var(--input-bg);
+    border-color: var(--input-bd);
+    color: var(--text);
+}
+
+.input-light .form-select:focus,
+.input-light .form-control:focus {
+    border-color: var(--input-bd-focus);
+    box-shadow: none;
+}
+
+.text-muted-2 {
+    color: var(--muted) !important;
+}
+
+/**************************************/
+/***Estilos de las tablas (tables)*****/
+/**************************************/
+.table-ranking thead th {
+    color: var(--table-head);
+    font-weight: 700;
+    font-size: .8rem;
+    border-bottom: 1px solid var(--card-border-2);
+}
+
+.table-ranking tbody td {
+    vertical-align: middle;
+    border-color: var(--table-border);
+    color: var(--text);
+}
+
+
+/**************************************/
+/**********Botones (buttons)***********/
+/**************************************/
+.btn-outline-dark {
+    border-color: var(--btn-ghost-bd);
+    color: var(--text);
+}
+
+.btn-outline-dark:hover {
+    border-color: var(--btn-ghost-bd-hover);
+}
+
+.btn-ghost {
+    background: var(--btn-ghost-bg);
+    border: 1px solid var(--btn-ghost-bd);
+    color: var(--text);
+}
+
+.btn-ghost:hover {
+    border-color: var(--btn-ghost-bd-hover);
+}
