@@ -31,7 +31,7 @@ El proceso del diseño se inició eligiendo los colores que se usarían en la p�
 
 Basándonos en la siguiente imagen, se eligieron los colores rojo, blanco y negro.
 <p align="center">
-    <img src="imagenesPagina/psicologiaColores.png" width="500" alt="Imagen mostrando significado de los colores en la psicología">
+    <img src="imagenesReadme/psicologiaColores.png" width="500" alt="Imagen mostrando significado de los colores en la psicología">
 </p>
 
 Justificación de la decisión: 
@@ -46,19 +46,19 @@ Los diseños de inspiración (en modo claro) fueron los siguientes:
 Inspiración eventos (pantalla principal)
 
 <p align="center">
-    <img src="imagenesPagina/inspiracionEventos.jpeg" width="500" alt="Imagen inspiración diseño para eventos (pantalla principal)">
+    <img src="imagenesReadme/inspiracionEventos.jpeg" width="500" alt="Imagen inspiración diseño para eventos (pantalla principal)">
 </p>
 
 Inspiración estadísticas
 
 <p align="center">
-    <img src="imagenesPagina/inspiracionEstadisticas.jpeg" width="500" alt="Imagen inspiración diseño para estadísticas">
+    <img src="imagenesReadme/inspiracionEstadisticas.jpeg" width="500" alt="Imagen inspiración diseño para estadísticas">
 </p>
 
 Inspiración calendario
 
 <p align="center">
-    <img src="imagenesPagina/inspiracionCalendario.jpeg" width="500" alt="Imagen inspiración diseño para calendario">
+    <img src="imagenesReadme/inspiracionCalendario.jpeg" width="500" alt="Imagen inspiración diseño para calendario">
 </p>
 
 ## Proceso elaboración eventos
