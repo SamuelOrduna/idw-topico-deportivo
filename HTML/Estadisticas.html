@@ -1,413 +1,411 @@
 <!doctype html>
-<html lang="es">
-  <head>
+<html lang="es"> <!--se define el lenguaje en español-->
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Estadísticas</title>
-
+    <!--=========importación de librerías==========-->
     <!-- Bootstrap & Icons -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
-
-    <!-- Chart.js -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <!-- Chart.js para las graficas -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <!--Importación de estilos personalizados-->
+    <link href="Estadisticas.css" rel="stylesheet" type="text/css">
+</head>
 
-    <style>
-      :root{
-        --brand-red:#e50914;
-        --brand-dark:#0f0f10;
-      }
-      body{ background:#f6f7f9; }
-      /* Header */
-      .hero {
-        background:linear-gradient(180deg, var(--brand-dark) 0%, #141416 100%);
-        color:#fff;
-        border-bottom-left-radius:1rem;
-        border-bottom-right-radius:1rem;
-      }
-      /* Nav pills (Filtros / Estadísticas / Calendario) */
-      .top-tabs .btn{
-        border-radius:.75rem;
-        font-weight:600;
-      }
-      .top-tabs .btn.active{
-        background:#1f1f22;
-        color:#fff;
-        border-color:#1f1f22;
-      }
-      .top-tabs .btn:not(.active){
-        background:#fff;
-        color:#111;
-        border-color:#e5e7eb;
-      }
-      .top-tabs .btn .bi{ margin-right:.5rem; }
-
-      /* Cards */
-      .card-raised{
-        border:1px solid #eaecf0;
-        border-radius:1rem;
-        background:#fff;
-      }
-      .card-raised .card-header{
-        background:#fff;
-        border-bottom:1px solid #eef0f3;
-        border-top-left-radius:1rem;
-        border-top-right-radius:1rem;
-      }
-
-      /* Badges / chips */
-      .chip{
-        display:inline-flex;align-items:center;gap:.5rem;
-        padding:.375rem .75rem;border-radius:.75rem;
-        background:#f1f2f4;color:#111;font-weight:600;font-size:.875rem;
-      }
-      .chip .bi{ color:var(--brand-red); }
-
-      /* Table */
-      .table-ranking thead th{
-        color:#6b7280;
-        font-weight:700;
-        font-size:.8rem;
-        border-bottom:1px solid #eef0f3;
-      }
-      .table-ranking tbody td{
-        vertical-align:middle;
-        border-color:#f0f2f5;
-      }
-
-      /* Small helpers */
-      .text-muted-2{ color:#6b7280 !important; }
-      .btn-ghost{
-        background:#fff;border:1px solid #e5e7eb;color:#111;
-      }
-      .btn-ghost:hover{ border-color:#d1d5db; }
-
-      /* Input group light style like mock */
-      .input-light .input-group-text{
-        background:#fff;border-color:#e5e7eb;color:#6b7280;
-      }
-      .input-light .form-control,
-      .input-light .form-select{
-        background:#fff;border-color:#e5e7eb;color:#111;
-      }
-      .input-light .form-select:focus,
-      .input-light .form-control:focus{
-        border-color:#d1d5db;box-shadow:none;
-      }
-    </style>
-  </head>
-  <body>
-
-    <!-- HEADER -->
+<body>
+    <!--============== HEADER ==============-->
     <header class="hero py-4">
-      <div class="container">
-        <div class="d-flex align-items-center justify-content-between">
-          <div>
-            <h1 class="h2 mb-1">Estadísticas</h1>
-            <div class="text-white-50">Competiciones de élite mundial</div>
-          </div>
-          <button class="btn btn-danger rounded-3">
-            <i class="bi bi-gear-fill"></i>
-          </button>
-        </div>
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between">
+                <!--Se define título y subtítulo-->
+                <div>
+                    <h1 class="h2 mb-1 text-white">Estadísticas</h1>
+                    <div class="text-white-50">Competiciones de élite mundial</div>
+                </div>
 
-        <!-- Top Tabs -->
-        <div class="mt-4">
-          <div class="top-tabs btn-group" role="group" aria-label="Navegación principal">
-            <a class="btn btn-ghost" href="#"><i class="bi bi-funnel-fill"></i> Filtros</a>
-            <button class="btn active"><i class="bi bi-bar-chart-line"></i> Estadísticas</button>
-            <a class="btn btn-ghost" href="#"><i class="bi bi-calendar3"></i> Calendario</a>
-          </div>
+                <!-- Botón MODO (luna/sol) para modo claro y oscuro -->
+                <button id="themeToggle" class="btn btn-danger rounded-3" aria-label="Cambiar tema"
+                    title="Cambiar tema">
+                    <i id="themeIcon" class="bi bi-moon-stars-fill"></i>
+                </button>
+            </div>
+
+            <!-- Pestañas superiores de navegación -->
+            <div class="mt-4">
+                <div class="top-tabs btn-group" role="group" aria-label="Navegación principal">
+                    <a class="btn btn-ghost" href="#"><i class="bi bi-funnel-fill"></i> Eventos</a>
+                    <button class="btn active"><i class="bi bi-bar-chart-line"></i> Estadísticas</button>
+                    <a class="btn btn-ghost" href="#"><i class="bi bi-calendar3"></i> Calendario</a>
+                </div>
+            </div>
         </div>
-      </div>
     </header>
 
-    <!-- FILTROS -->
+    <!--================ FILTROS==================== -->
     <section class="py-4">
-      <div class="container">
-        <div class="d-flex align-items-center gap-2 mb-2">
-          <i class="bi bi-funnel-fill text-danger"></i>
-          <h5 class="mb-0">Filtros</h5>
+        <div class="container">
+            <!--titulo de bloque con icono-->
+            <div class="d-flex align-items-center gap-2 mb-2">
+                <i class="bi bi-funnel-fill text-danger"></i>
+                <h5 class="mb-0">Filtros</h5>
+            </div>
+            <!--cards-->
+            <div class="card-raised p-3">
+                <div class="row g-3 input-light">
+                    <!-- Buscador -->
+                    <div class="col-12 col-lg-4">
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-search"></i></span>
+                            <input class="form-control" placeholder="Buscar equipos..." />
+                        </div>
+                    </div>
+
+                    <!-- SELECT: Deporte -->
+                    <div class="col-12 col-sm-6 col-lg-2">
+                        <label class="form-label text-muted-2 mb-1">Deporte</label>
+                        <select class="form-select">
+                            <option>Todos</option>
+                            <option>Fútbol</option>
+                            <option>Baloncesto</option>
+                            <option>Tenis</option>
+                        </select>
+                    </div>
+
+                    <!-- SELECT: Competición -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <label class="form-label text-muted-2 mb-1">Competición</label>
+                        <select class="form-select">
+                            <option>Seleccionar</option>
+                            <option>La Liga</option>
+                            <option>Premier League</option>
+                            <option>Serie A</option>
+                        </select>
+                    </div>
+
+                    <!-- SELECT: Temporada -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <label class="form-label text-muted-2 mb-1">Temporada</label>
+                        <select class="form-select">
+                            <option>Seleccionar</option>
+                            <option>2024/25</option>
+                            <option>2023/24</option>
+                            <option>2022/23</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="card-raised p-3">
-          <div class="row g-3 input-light">
-            <!-- Buscador -->
-            <div class="col-12 col-lg-4">
-              <div class="input-group">
-                <span class="input-group-text"><i class="bi bi-search"></i></span>
-                <input class="form-control" placeholder="Buscar equipos..." />
-              </div>
-            </div>
-
-            <!-- Deporte -->
-            <div class="col-12 col-sm-6 col-lg-2">
-              <label class="form-label text-muted-2 mb-1">Deporte</label>
-              <select class="form-select">
-                <option>Todos</option>
-                <option>Fútbol</option>
-                <option>Baloncesto</option>
-                <option>Tenis</option>
-              </select>
-            </div>
-
-            <!-- Competición -->
-            <div class="col-12 col-sm-6 col-lg-3">
-              <label class="form-label text-muted-2 mb-1">Competición</label>
-              <select class="form-select">
-                <option>Seleccionar</option>
-                <option>La Liga</option>
-                <option>Premier League</option>
-                <option>Serie A</option>
-              </select>
-            </div>
-
-            <!-- Temporada -->
-            <div class="col-12 col-sm-6 col-lg-3">
-              <label class="form-label text-muted-2 mb-1">Temporada</label>
-              <select class="form-select">
-                <option>Seleccionar</option>
-                <option>2024/25</option>
-                <option>2023/24</option>
-                <option>2022/23</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
 
-    <!-- CONTENIDO PRINCIPAL -->
+    <!--================== CONTENIDO PRINCIPAL =========================-->
     <main class="pb-5">
-      <div class="container">
-        <div class="row g-4">
-          <!-- Columna izquierda: barras + pie -->
-          <div class="col-12 col-lg-8">
-            <div class="card-raised mb-4">
-              <div class="card-header d-flex align-items-center justify-content-between">
-                <h6 class="mb-0">ESTADÍSTICAS DE GOLES</h6>
-                <span class="chip"><i class="bi bi-lightning-charge-fill"></i> Últimos 5 partidos</span>
-              </div>
-              <div class="card-body">
-                <canvas id="barGoles" height="140"></canvas>
-                <div class="text-muted-2 small mt-2">Goles, Goles en contra, Disparos, Disparos a puerta</div>
-              </div>
+        <div class="container">
+            <div class="row g-4">
+                <!-- Columna izquierda (gráficas)-->
+                <div class="col-12 col-lg-8">
+                    <!--tarjeta barras de goles-->
+                    <div class="card-raised mb-4">
+                        <div class="card-header d-flex align-items-center justify-content-between">
+                            <h6 class="mb-0">ESTADÍSTICAS DE GOLES</h6>
+                            <span class="chip"><i class="bi bi-lightning-charge-fill"></i> Últimos 5 partidos</span>
+                        </div>
+                        <div class="card-body">
+                            <!--dibujamos la grafica-->
+                            <canvas id="barGoles" height="140"></canvas>
+                            <div class="text-muted-2 small mt-2">Goles, Goles en contra, Disparos, Disparos a puerta
+                            </div>
+                        </div>
+                    </div>
+                    <!--tiros de esquina-->
+                    <div class="card-raised">
+                        <div class="card-header">
+                            <h6 class="mb-0">Tiros de esquina</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <!--usamos la gráfica de pastel-->
+                                <div class="col-12 col-md-6">
+                                    <canvas id="pieCorners" height="180"></canvas>
+                                </div>
+                                <!--descripcion a la derecha-->
+                                <div class="col-12 col-md-6">
+                                    <ul class="list-unstyled m-0">
+                                        <!--porcentaje de ganados-->
+                                        <li class="d-flex align-items-center justify-content-between py-2 border-bottom"
+                                            style="border-color:var(--card-border-2)!important;">
+                                            <span class="d-flex align-items-center gap-2">
+                                                <span class="badge rounded-pill" style="background:var(--brand-red)">
+                                                </span>
+                                                Ganados
+                                            </span>
+                                            <strong>60%</strong>
+                                        </li>
+                                        <!--porcentaje de perdidos-->
+                                        <li class="d-flex align-items-center justify-content-between py-2">
+                                            <span class="d-flex align-items-center gap-2">
+                                                <span class="badge rounded-pill" style="background:#1f1f22"> </span>
+                                                Perdidos
+                                            </span>
+                                            <strong>40%</strong>
+                                        </li>
+                                    </ul>
+                                    <div class="text-muted-2 small mt-3">Distribución de córners a favor vs en contra.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--============ Columna derecha: tabla de clasificaciones============= -->
+                <div class="col-12 col-lg-4">
+                    <div class="card-raised h-100">
+                        <div class="card-header">
+                            <h6 class="mb-0">CLASIFICACIÓN</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-ranking align-middle">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:2.5rem">#</th>
+                                            <th>EQUIPO</th>
+                                            <th class="text-end">PTS</th>
+                                            <th class="text-end">PJ</th>
+                                            <th class="text-end">PG</th>
+                                            <th class="text-end">PE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Real Madrid</td>
+                                            <td class="text-end">84</td>
+                                            <td class="text-end">73</td>
+                                            <td class="text-end">48</td>
+                                            <td class="text-end">51</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>FC Barcelona</td>
+                                            <td class="text-end">79</td>
+                                            <td class="text-end">75</td>
+                                            <td class="text-end">41</td>
+                                            <td class="text-end">51</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Atletico Madrid</td>
+                                            <td class="text-end">75</td>
+                                            <td class="text-end">74</td>
+                                            <td class="text-end">41</td>
+                                            <td class="text-end">50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>Real Sociedad</td>
+                                            <td class="text-end">70</td>
+                                            <td class="text-end">75</td>
+                                            <td class="text-end">43</td>
+                                            <td class="text-end">42</td>
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>Real Betis</td>
+                                            <td class="text-end">65</td>
+                                            <td class="text-end">73</td>
+                                            <td class="text-end">43</td>
+                                            <td class="text-end">43</td>
+                                        </tr>
+                                        <tr>
+                                            <td>6</td>
+                                            <td>Sevilla</td>
+                                            <td class="text-end">61</td>
+                                            <td class="text-end">70</td>
+                                            <td class="text-end">42</td>
+                                            <td class="text-end">46</td>
+                                        </tr>
+                                        <tr>
+                                            <td>7</td>
+                                            <td>Villarreal</td>
+                                            <td class="text-end">60</td>
+                                            <td class="text-end">70</td>
+                                            <td class="text-end">43</td>
+                                            <td class="text-end">46</td>
+                                        </tr>
+                                        <tr>
+                                            <td>8</td>
+                                            <td>Osasuna</td>
+                                            <td class="text-end">56</td>
+                                            <td class="text-end">70</td>
+                                            <td class="text-end">42</td>
+                                            <td class="text-end">44</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-outline-dark w-100 mt-2">Ver tabla completa</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="card-raised">
-              <div class="card-header">
-                <h6 class="mb-0">Tiros de esquina</h6>
-              </div>
-              <div class="card-body">
-                <div class="row align-items-center">
-                  <div class="col-12 col-md-6">
-                    <canvas id="pieCorners" height="180"></canvas>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <ul class="list-unstyled m-0">
-                      <li class="d-flex align-items-center justify-content-between py-2 border-bottom">
-                        <span class="d-flex align-items-center gap-2">
-                          <span class="badge rounded-pill" style="background:var(--brand-red)"> </span>
-                          Ganados
-                        </span>
-                        <strong>60%</strong>
-                      </li>
-                      <li class="d-flex align-items-center justify-content-between py-2">
-                        <span class="d-flex align-items-center gap-2">
-                          <span class="badge rounded-pill" style="background:#1f1f22"> </span>
-                          Perdidos
-                        </span>
-                        <strong>40%</strong>
-                      </li>
-                    </ul>
-                    <div class="text-muted-2 small mt-3">Distribución de córners a favor vs en contra.</div>
-                  </div>
+            <!-- KPIs (tarjetas resumidas) -->
+            <div class="mt-4">
+                <div class="card-raised">
+                    <div class="card-header">
+                        <h6 class="mb-0">ESTADÍSTICAS DE GOLES</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <!--cadda tarjeta pequeña con valor y etiqueta-->
+                            <div class="col-6 col-md-3">
+                                <div class="p-3 border rounded-3 text-center"
+                                    style="border-color:var(--card-border-2)!important;">
+                                    <div class="text-muted-2 small">Goles</div>
+                                    <div class="fs-4 fw-bold">40</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="p-3 border rounded-3 text-center"
+                                    style="border-color:var(--card-border-2)!important;">
+                                    <div class="text-muted-2 small">Goles en contra</div>
+                                    <div class="fs-4 fw-bold">28</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="p-3 border rounded-3 text-center"
+                                    style="border-color:var(--card-border-2)!important;">
+                                    <div class="text-muted-2 small">Disparos</div>
+                                    <div class="fs-4 fw-bold">210</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="p-3 border rounded-3 text-center"
+                                    style="border-color:var(--card-border-2)!important;">
+                                    <div class="text-muted-2 small">A puerta</div>
+                                    <div class="fs-4 fw-bold">98</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
 
-          <!-- Columna derecha: clasificación -->
-          <div class="col-12 col-lg-4">
-            <div class="card-raised h-100">
-              <div class="card-header">
-                <h6 class="mb-0">CLASIFICACIÓN</h6>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-sm table-ranking align-middle">
-                    <thead>
-                      <tr>
-                        <th style="width:2.5rem">#</th>
-                        <th>EQUIPO</th>
-                        <th class="text-end">PTS</th>
-                        <th class="text-end">PJ</th>
-                        <th class="text-end">PG</th>
-                        <th class="text-end">PE</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td><td>Real Madrid</td>
-                        <td class="text-end">84</td><td class="text-end">73</td><td class="text-end">48</td><td class="text-end">51</td>
-                      </tr>
-                      <tr>
-                        <td>2</td><td>FC Barcelona</td>
-                        <td class="text-end">79</td><td class="text-end">75</td><td class="text-end">41</td><td class="text-end">51</td>
-                      </tr>
-                      <tr>
-                        <td>3</td><td>Atletico Madrid</td>
-                        <td class="text-end">75</td><td class="text-end">74</td><td class="text-end">41</td><td class="text-end">50</td>
-                      </tr>
-                      <tr>
-                        <td>4</td><td>Real Sociedad</td>
-                        <td class="text-end">70</td><td class="text-end">75</td><td class="text-end">43</td><td class="text-end">42</td>
-                      </tr>
-                      <tr>
-                        <td>5</td><td>Real Betis</td>
-                        <td class="text-end">65</td><td class="text-end">73</td><td class="text-end">43</td><td class="text-end">43</td>
-                      </tr>
-                      <tr>
-                        <td>6</td><td>Sevilla</td>
-                        <td class="text-end">61</td><td class="text-end">70</td><td class="text-end">42</td><td class="text-end">46</td>
-                      </tr>
-                      <tr>
-                        <td>7</td><td>Villarreal</td>
-                        <td class="text-end">60</td><td class="text-end">70</td><td class="text-end">43</td><td class="text-end">46</td>
-                      </tr>
-                      <tr>
-                        <td>8</td><td>Osasuna</td>
-                        <td class="text-end">56</td><td class="text-end">70</td><td class="text-end">42</td><td class="text-end">44</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <button class="btn btn-outline-dark w-100 mt-2">
-                  Ver tabla completa
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
-
-        <!-- Segunda sección (opcional, como en el mock) -->
-        <div class="mt-4">
-          <div class="card-raised">
-            <div class="card-header">
-              <h6 class="mb-0">ESTADÍSTICAS DE GOLES</h6>
-            </div>
-            <div class="card-body">
-              <div class="row g-3">
-                <div class="col-6 col-md-3">
-                  <div class="p-3 border rounded-3 text-center">
-                    <div class="text-muted-2 small">Goles</div>
-                    <div class="fs-4 fw-bold">40</div>
-                  </div>
-                </div>
-                <div class="col-6 col-md-3">
-                  <div class="p-3 border rounded-3 text-center">
-                    <div class="text-muted-2 small">Goles en contra</div>
-                    <div class="fs-4 fw-bold">28</div>
-                  </div>
-                </div>
-                <div class="col-6 col-md-3">
-                  <div class="p-3 border rounded-3 text-center">
-                    <div class="text-muted-2 small">Disparos</div>
-                    <div class="fs-4 fw-bold">210</div>
-                  </div>
-                </div>
-                <div class="col-6 col-md-3">
-                  <div class="p-3 border rounded-3 text-center">
-                    <div class="text-muted-2 small">A puerta</div>
-                    <div class="fs-4 fw-bold">98</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
     </main>
 
-    <!-- FOOTER -->
+    <!--================ FOOTER ===================-->
     <footer class="py-4">
-      <div class="container">
-        <div class="card-raised p-3 d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
-          <div class="d-flex align-items-center gap-2">
-            <i class="bi bi-trophy"></i>
-            <span class="fw-semibold">Arena Glory Stats</span>
-            <span class="text-muted-2">© 2025</span>
-          </div>
-          <ul class="nav">
-            <li class="nav-item"><a class="nav-link text-muted-2" href="#">Acerca</a></li>
-            <li class="nav-item"><a class="nav-link text-muted-2" href="#">Privacidad</a></li>
-            <li class="nav-item"><a class="nav-link text-muted-2" href="#">Términos</a></li>
-            <li class="nav-item"><a class="nav-link text-muted-2" href="#">Soporte</a></li>
-          </ul>
+        <div class="container">
+            <div
+                class="card-raised p-3 d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-trophy"></i>
+                    <span class="fw-semibold">Arena Glory Stats</span>
+                    <span class="text-muted-2">© 2025</span>
+                </div>
+            </div>
         </div>
-      </div>
     </footer>
 
+
+    <!--===============SCRIPTS==============-->
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Charts init -->
+    <!-- Charts + cambio de modo (oscuro y claro) -->
     <script>
-      // Bar: Estadísticas de goles
-      const barCtx = document.getElementById('barGoles');
-      new Chart(barCtx, {
-        type: 'bar',
-        data: {
-          labels: ['Goles','Goles en contra','Disparos','Disparos a puerta'],
-          datasets: [{
-            label: 'Equipo',
-            data: [23, 14, 20, 24],
-            backgroundColor: [
-              'rgba(229, 9, 20, 0.85)',
-              'rgba(17,17,17,0.85)',
-              'rgba(17,17,17,0.85)',
-              'rgba(17,17,17,0.85)'
-            ],
-            borderRadius: 8
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: { beginAtZero: true, ticks: { stepSize: 5 } }
-          },
-          plugins: {
-            legend: { display: false }
-          }
-        }
-      });
+        // para leer variables CSS
+        function cssVar(v) { return getComputedStyle(document.body).getPropertyValue(v).trim(); }
 
-      // Pie: Tiros de esquina
-      const pieCtx = document.getElementById('pieCorners');
-      new Chart(pieCtx, {
-        type: 'pie',
-        data: {
-          labels: ['Ganados','Perdidos'],
-          datasets: [{
-            data: [60, 40],
-            backgroundColor: ['#e50914', '#1f1f22']
-          }]
-        },
-        options: {
-          plugins: {
-            legend: { position: 'bottom' }
-          }
+        // Charts (creación con variables actuales)
+        //Construye ambas gráficas usando los colores actuales del tema
+        let barChart, pieChart;
+        function buildCharts() {
+            const barCtx = document.getElementById('barGoles');
+            const pieCtx = document.getElementById('pieCorners');
+            //ajuste de color
+            const commonFontColor = cssVar('--legend');
+            Chart.defaults.color = commonFontColor;
+            Chart.defaults.borderColor = cssVar('--grid');
+            //destruir si ya existen
+            if (barChart) barChart.destroy();
+            if (pieChart) pieChart.destroy();
+            //gráfica de barras (estadísticas de goles)
+            barChart = new Chart(barCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Goles', 'Goles en contra', 'Disparos', 'Disparos a puerta'],
+                    datasets: [{
+                        data: [23, 14, 20, 24],
+                        backgroundColor: [
+                            cssVar('--bar-1'), //rojo de marca
+                            cssVar('--bar-2'), //barras negras/blancas segun el modo elegido
+                            cssVar('--bar-2'),
+                            cssVar('--bar-2')
+                        ],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true, ticks: { stepSize: 5 }, grid: { color: cssVar('--grid') } },
+                        x: { grid: { display: false } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            //gráfica de pastel (tiros de esquina)
+            pieChart = new Chart(pieCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Ganados', 'Perdidos'],
+                    datasets: [{
+                        data: [60, 40],
+                        backgroundColor: ['#e50914', '#1f1f22'] //se usa rojo y negro
+                    }]
+                },
+                options: { plugins: { legend: { position: 'bottom', labels: { color: commonFontColor } } } }
+            });
         }
-      });
+
+        //toggle + persistencia
+        const STORAGE_KEY = 'arena-theme';
+        const body = document.body; //referenciamos al body para poner/quitar clase
+        const icon = document.getElementById('themeIcon'); //cambiamos icono luna/sol segun sea el caso
+        const btnToggle = document.getElementById('themeToggle'); //boton para disparar el cambio 
+
+        //se aplica tema oscuro o claro, cambia icono lunaz/sol y reconstruye graficas
+        function applyTheme(theme) {
+            const dark = theme === 'dark';
+            body.classList.toggle('theme-dark', dark);
+            icon.className = dark ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill';
+            localStorage.setItem(STORAGE_KEY, dark ? 'dark' : 'light');
+            buildCharts(); // re-construir con colores del tema
+        }
+
+        // Inicializar con preferencia guardada o media query
+        //iniciamos el la pantalla con el tema oscuro como default
+        (function initTheme() {
+            const saved = localStorage.getItem('arena-theme');
+            applyTheme(saved ? saved : 'dark');
+        })();
+
+        //evento de dar clic en el botón de cmabio de tema
+        btnToggle.addEventListener('click', () => {
+            const next = body.classList.contains('theme-dark') ? 'light' : 'dark';
+            applyTheme(next);
+        });
+
+        // Construir charts al cargar
+        window.addEventListener('DOMContentLoaded', buildCharts);
     </script>
-  </body>
+</body>
+
 </html>
-
-
