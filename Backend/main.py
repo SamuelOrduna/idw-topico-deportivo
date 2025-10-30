@@ -1,20 +1,12 @@
-
+# backend/main.py
 from typing import List, Optional, Dict
-from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from datetime import datetime
 from itertools import count
-from pathlib import Path
 
-app = FastAPI(title="Sports API + Web (demo)")
-
-FRONTEND_DIR = Path(__file__).resolve().parents[1] / "Frontend"
-templates = Jinja2Templates(directory=str(FRONTEND_DIR / "templates"))
-app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR / "static")), name="static")
+app = FastAPI(title="Sports API (solo JSON)")
 
 app.add_middleware(
     CORSMiddleware,
@@ -28,7 +20,7 @@ class EventIn(BaseModel):
     deporte: str
     local: str
     visita: str
-    fecha_iso: str       
+    fecha_iso: str        
     estadio: str
     asistentes: int
     estado: str           
@@ -40,7 +32,6 @@ class Event(EventIn):
 
 DB: List[Event] = []
 _seed = [
-
     {"titulo":"Champions League Final","liga":"UEFA Champions League","deporte":"Fútbol",
      "local":"Real Madrid","visita":"Bayern Munich","fecha_iso":"2025-06-14T21:00:00Z",
      "estadio":"Wembley Stadium","asistentes":90000,"estado":"Programado"},
@@ -54,7 +45,6 @@ _seed = [
     {"titulo":"Wimbledon Final","liga":"Grand Slam","deporte":"Tenis",
      "local":"Novak Djokovic","visita":"Carlos Alcaraz","fecha_iso":"2025-07-12T14:00:00Z",
      "estadio":"All England Club","asistentes":15000,"estado":"Programado"},
-
     {"titulo":"J1 Real Madrid vs FC Barcelona","liga":"La Liga","deporte":"Fútbol",
      "local":"Real Madrid","visita":"FC Barcelona","fecha_iso":"2025-01-18T16:00:00Z",
      "estadio":"Santiago Bernabéu","asistentes":81044,"estado":"Finalizado","marcador_local":2,"marcador_visita":1},
@@ -74,36 +64,18 @@ _seed = [
      "local":"Real Sociedad","visita":"Real Betis","fecha_iso":"2025-02-03T18:00:00Z",
      "estadio":"Reale Arena","asistentes":36000,"estado":"Finalizado","marcador_local":0,"marcador_visita":2},
 ]
-_id_gen = count(start=1)
+_id_gen = count(1)
 for r in _seed:
     DB.append(Event(id=next(_id_gen), **r))
 
-API_BASE = "http://127.0.0.1:8000" 
-
-@app.get("/", response_class=HTMLResponse, tags=["pages"])
-def page_index(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request, "api_base": API_BASE})
-
-@app.get("/estadisticas", response_class=HTMLResponse, tags=["pages"])
-def page_stats(request: Request):
-    return templates.TemplateResponse("estadisticas.html", {"request": request, "api_base": API_BASE})
-
-@app.get("/calendario", response_class=HTMLResponse, tags=["pages"])
-def page_calendar(request: Request):
-    return templates.TemplateResponse("calendario.html", {"request": request, "api_base": API_BASE})
-
-@app.get("/admin", response_class=HTMLResponse, tags=["pages"])
-def page_admin(request: Request):
-    return templates.TemplateResponse("admin.html", {"request": request, "api_base": API_BASE})
-
-@app.get("/api", tags=["root"])
+@app.get("/api")
 def root():
-    return {"message": "Sports API up", "count": len(DB)}
+    return {"ok": True, "count": len(DB)}
 
-@app.get("/events", response_model=List[Event], tags=["events"])
+@app.get("/events", response_model=List[Event])
 def list_events(
     page: int = Query(1, ge=1),
-    page_size: int = Query(5, ge=1, le=50),
+    page_size: int = Query(9, ge=1, le=100),
     q: Optional[str] = None,
     deporte: Optional[str] = None,
     liga: Optional[str] = None,
@@ -119,29 +91,28 @@ def list_events(
     start = (page - 1) * page_size
     return items[start:start + page_size]
 
-@app.get("/events/{event_id}", response_model=Event, tags=["events"])
+@app.get("/events/{event_id}", response_model=Event)
 def get_event(event_id: int):
     for e in DB:
         if e.id == event_id:
             return e
-    raise HTTPException(status_code=404, detail="Event not found")
+    raise HTTPException(404, "Event not found")
 
-@app.post("/events", response_model=Event, status_code=201, tags=["events"])
+@app.post("/events", response_model=Event, status_code=201)
 def create_event(payload: EventIn):
     evt = Event(id=next(_id_gen), **payload.dict())
     DB.append(evt)
     return evt
 
-@app.put("/events/{event_id}", response_model=Event, tags=["events"])
+@app.put("/events/{event_id}", response_model=Event)
 def update_event(event_id: int, payload: EventIn):
     for i, e in enumerate(DB):
         if e.id == event_id:
-            updated = Event(id=e.id, **payload.dict())
-            DB[i] = updated
-            return updated
-    raise HTTPException(status_code=404, detail="Event not found")
+            DB[i] = Event(id=e.id, **payload.dict())
+            return DB[i]
+    raise HTTPException(404, "Event not found")
 
-@app.get("/stats/attendance-by-team", tags=["stats"])
+@app.get("/stats/attendance-by-team")
 def attendance_by_team():
     acc: Dict[str, int] = {}
     for e in DB:
@@ -151,7 +122,7 @@ def attendance_by_team():
     values = [acc[k] for k in labels]
     return {"labels": labels, "values": values, "updated": datetime.utcnow().isoformat() + "Z"}
 
-@app.get("/stats/event-status", tags=["stats"])
+@app.get("/stats/event-status")
 def event_status_breakdown():
     buckets = {"Programado": 0, "En Vivo": 0, "Finalizado": 0}
     for e in DB:
@@ -161,17 +132,8 @@ def event_status_breakdown():
     values = [buckets[k] for k in labels]
     return {"labels": labels, "values": values, "updated": datetime.utcnow().isoformat() + "Z"}
 
-
-@app.get("/stats/standings", tags=["stats"])
-def standings(
-    deporte: Optional[str] = None,
-    liga: Optional[str] = None,
-):
-    """
-    Clasificación a partir de eventos FINALIZADOS con marcador.
-    Regla fútbol: 3 pts victoria, 1 empate, 0 derrota.
-    Orden: PTS desc, DG desc, GF desc, nombre asc.
-    """
+@app.get("/stats/standings")
+def standings(deporte: Optional[str] = None, liga: Optional[str] = None):
     table: Dict[str, Dict[str, int]] = {}
 
     def row(name: str) -> Dict[str, int]:
@@ -180,19 +142,14 @@ def standings(
         return table[name]
 
     for e in DB:
-        if e.estado != "Finalizado":
-            continue
-        if e.marcador_local is None or e.marcador_visita is None:
-            continue
-        if deporte and e.deporte.lower() != deporte.lower():
-            continue
-        if liga and e.liga.lower() != liga.lower():
-            continue
+        if e.estado != "Finalizado": continue
+        if e.marcador_local is None or e.marcador_visita is None: continue
+        if deporte and e.deporte.lower() != deporte.lower(): continue
+        if liga and e.liga.lower() != liga.lower(): continue
 
         L, V = e.local, e.visita
         gl, gv = int(e.marcador_local), int(e.marcador_visita)
         rL, rV = row(L), row(V)
-
         rL["pj"] += 1; rV["pj"] += 1
         rL["gf"] += gl; rL["gc"] += gv
         rV["gf"] += gv; rV["gc"] += gl
@@ -204,13 +161,10 @@ def standings(
         else:
             rL["pe"] += 1; rV["pe"] += 1; rL["pts"] += 1; rV["pts"] += 1
 
-    rows = []
-    for name, r in table.items():
-        rows.append({
-            "team": name,
-            "pts": r["pts"], "pj": r["pj"], "pg": r["pg"], "pe": r["pe"],
-            "pp": r["pp"], "gf": r["gf"], "gc": r["gc"], "dg": r["gf"] - r["gc"]
-        })
-
+    rows = [{
+        "team": name,
+        "pts": r["pts"], "pj": r["pj"], "pg": r["pg"], "pe": r["pe"],
+        "pp": r["pp"], "gf": r["gf"], "gc": r["gc"], "dg": r["gf"] - r["gc"]
+    } for name, r in table.items()]
     rows.sort(key=lambda x: (-x["pts"], -x["dg"], -x["gf"], x["team"].lower()))
     return {"rows": rows, "updated": datetime.utcnow().isoformat() + "Z"}
