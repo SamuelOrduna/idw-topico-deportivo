@@ -1,4 +1,4 @@
-# uvicorn main:app --reload --port 8000
+
 from typing import List, Optional, Dict
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -12,39 +12,35 @@ from pathlib import Path
 
 app = FastAPI(title="Sports API + Web (demo)")
 
-# === Static & Templates (Jinja2: extends/blocks como Flask) =========
 FRONTEND_DIR = Path(__file__).resolve().parents[1] / "Frontend"
 templates = Jinja2Templates(directory=str(FRONTEND_DIR / "templates"))
 app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR / "static")), name="static")
 
-# === CORS ===========================================================
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"], allow_credentials=True,
     allow_methods=["*"], allow_headers=["*"],
 )
 
-# ===== Modelos ======================================================
 class EventIn(BaseModel):
     titulo: str
     liga: str
     deporte: str
     local: str
     visita: str
-    fecha_iso: str         # "2025-06-14T21:00:00Z"
+    fecha_iso: str       
     estadio: str
     asistentes: int
-    estado: str            # Programado | En Vivo | Finalizado
+    estado: str           
     marcador_local: int | None = None
     marcador_visita: int | None = None
 
 class Event(EventIn):
     id: int
 
-# ===== DB en memoria + seed ========================================
 DB: List[Event] = []
 _seed = [
-    # ——— UEFA / NBA / NFL / Tenis (como antes)
+
     {"titulo":"Champions League Final","liga":"UEFA Champions League","deporte":"Fútbol",
      "local":"Real Madrid","visita":"Bayern Munich","fecha_iso":"2025-06-14T21:00:00Z",
      "estadio":"Wembley Stadium","asistentes":90000,"estado":"Programado"},
@@ -59,7 +55,6 @@ _seed = [
      "local":"Novak Djokovic","visita":"Carlos Alcaraz","fecha_iso":"2025-07-12T14:00:00Z",
      "estadio":"All England Club","asistentes":15000,"estado":"Programado"},
 
-    # ——— La Liga (agrego FINALIZADOS para que la clasificación funcione)
     {"titulo":"J1 Real Madrid vs FC Barcelona","liga":"La Liga","deporte":"Fútbol",
      "local":"Real Madrid","visita":"FC Barcelona","fecha_iso":"2025-01-18T16:00:00Z",
      "estadio":"Santiago Bernabéu","asistentes":81044,"estado":"Finalizado","marcador_local":2,"marcador_visita":1},
@@ -83,8 +78,7 @@ _id_gen = count(start=1)
 for r in _seed:
     DB.append(Event(id=next(_id_gen), **r))
 
-# ====== PÁGINAS (Jinja2) ============================================
-API_BASE = "http://127.0.0.1:8000"  # inyectada a templates
+API_BASE = "http://127.0.0.1:8000" 
 
 @app.get("/", response_class=HTMLResponse, tags=["pages"])
 def page_index(request: Request):
@@ -98,17 +92,14 @@ def page_stats(request: Request):
 def page_calendar(request: Request):
     return templates.TemplateResponse("calendario.html", {"request": request, "api_base": API_BASE})
 
-# ——— NUEVO: Admin (alta/edición rápida)
 @app.get("/admin", response_class=HTMLResponse, tags=["pages"])
 def page_admin(request: Request):
     return templates.TemplateResponse("admin.html", {"request": request, "api_base": API_BASE})
 
-# ===== API ==========================================================
 @app.get("/api", tags=["root"])
 def root():
     return {"message": "Sports API up", "count": len(DB)}
 
-# Listado con paginación (servidor) + filtros
 @app.get("/events", response_model=List[Event], tags=["events"])
 def list_events(
     page: int = Query(1, ge=1),
@@ -150,7 +141,6 @@ def update_event(event_id: int, payload: EventIn):
             return updated
     raise HTTPException(status_code=404, detail="Event not found")
 
-# ——— Stats: asistencia
 @app.get("/stats/attendance-by-team", tags=["stats"])
 def attendance_by_team():
     acc: Dict[str, int] = {}
@@ -161,7 +151,6 @@ def attendance_by_team():
     values = [acc[k] for k in labels]
     return {"labels": labels, "values": values, "updated": datetime.utcnow().isoformat() + "Z"}
 
-# ——— Stats: distribución por estado
 @app.get("/stats/event-status", tags=["stats"])
 def event_status_breakdown():
     buckets = {"Programado": 0, "En Vivo": 0, "Finalizado": 0}
@@ -172,7 +161,7 @@ def event_status_breakdown():
     values = [buckets[k] for k in labels]
     return {"labels": labels, "values": values, "updated": datetime.utcnow().isoformat() + "Z"}
 
-# ——— Stats: Clasificación (La Liga por defecto; acepta filtros)
+
 @app.get("/stats/standings", tags=["stats"])
 def standings(
     deporte: Optional[str] = None,

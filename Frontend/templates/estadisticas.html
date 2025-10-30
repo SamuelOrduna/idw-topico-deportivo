@@ -9,7 +9,6 @@
 <main class="pb-5">
   <div class="container">
     <div class="row g-4">
-      <!-- Columna izquierda (gráficas) -->
       <div class="col-12 col-lg-8">
         <div class="card-raised mb-4">
           <div class="card-header d-flex align-items-center justify-content-between">
@@ -38,7 +37,6 @@
         </div>
       </div>
 
-      <!-- Columna derecha (CLASIFICACIÓN) -->
       <div class="col-12 col-lg-4">
         <div class="card-raised h-100">
           <div class="card-header"><h6 class="mb-0">CLASIFICACIÓN</h6></div>
@@ -55,7 +53,7 @@
                     <th class="text-end">PE</th>
                   </tr>
                 </thead>
-                <tbody id="standingsBody"><!-- se llena por JS --></tbody>
+                <tbody id="standingsBody"></tbody>
               </table>
             </div>
             <div class="small text-secondary px-3 py-2 border-top" id="standingsMeta"></div>
@@ -64,7 +62,6 @@
       </div>
     </div>
 
-    <!-- KPIs -->
     <div class="mt-4">
       <div class="card-raised">
         <div class="card-header"><h6 class="mb-0">KPIs (demo)</h6></div>
@@ -103,9 +100,8 @@
 {% endblock %}
 
 {% block scripts %}
-  <!-- Chart.js debe cargarse en base.html antes de este script -->
   <script>
-    // expone la URL de tu API al JS
+
     window.API_BASE = "{{ api_base or 'http://127.0.0.1:8000' }}";
   </script>
   <script src="/static/js/stats.js"></script>

@@ -29,7 +29,6 @@ async function buildCharts(){
     Chart.defaults.borderColor = colorGrid;
   }
 
-  // ---- Barras (Asistencia)
   if (barEl){
     try{
       const att = await safeFetch(`${API}/stats/attendance-by-team`);
@@ -77,7 +76,6 @@ async function buildCharts(){
     }
   }
 
-  // ---- Pie (Estado)
   if (pieEl){
     try{
       const st = await safeFetch(`${API}/stats/event-status`);
@@ -128,7 +126,6 @@ async function buildCharts(){
   }
 }
 
-// ===== Clasificación ========================================================
 async function buildStandings(){
   const tbody = $("#standingsBody");
   const meta  = $("#standingsMeta");
@@ -161,13 +158,11 @@ async function buildStandings(){
 }
 
 window.addEventListener("DOMContentLoaded", ()=>{
-  buildCharts();       // onLoad
-  buildStandings();    // onLoad
+  buildCharts();      
+  buildStandings();    
 });
 
-// Extra (2 eventos “nuevos” de interactividad)
 document.addEventListener("visibilitychange", ()=>{
-  // Cuando regresas a la pestaña, refresca solo la parte de stats.
   if (!document.hidden) buildCharts();
 });
 window.addEventListener("storage", (e)=>{

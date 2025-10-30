@@ -83,17 +83,15 @@ $("#evtForm").addEventListener("submit", async (ev)=>{
     }
     clearForm();
     loadTable();
-    localStorage.setItem("eventsChangedAt", String(Date.now())); // para notificar otras pestañas
+    localStorage.setItem("eventsChangedAt", String(Date.now())); 
   }catch(err){
     alert("Error guardando: "+err.message);
   }
 });
 
-// Paginación (servidor)
 $("#btnPrev").addEventListener("click", ()=>{ page = Math.max(1, page-1); loadTable(); });
 $("#btnNext").addEventListener("click", ()=>{ if(lastLen===pageSize) page+=1; loadTable(); });
 
-// Eventos extra (interactividad)
 document.addEventListener("keydown", (e)=>{ if(e.key==="Escape") clearForm(); });
 window.addEventListener("storage", (e)=>{ if(e.key==="eventsChangedAt") loadTable(); });
 
