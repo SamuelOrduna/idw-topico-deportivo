@@ -92,7 +92,6 @@ Inspiración calendario
     - Columna izquierda: gráfica de barras “Estadísticas de goles” (goles, en contra, disparos, a puerta) y gráfica de pastel “Tiros de esquina”.
     - Columna derecha: tabla de clasificación con columnas (#, Equipo, PTS, PJ, PG, PE) y acción “Ver tabla completa”.
 
-KPIs inferiores (tarjetas con métricas resumidas) para lectura rápida.
 ### Componentes 
 - Bootstrap 5.3.8: espaciados, botones, formularios y utilidades responsivas.
 - Chart.js 4:
