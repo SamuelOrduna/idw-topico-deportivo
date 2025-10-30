@@ -1,0 +1,43 @@
+# === OS / Editor ===
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+
+# === Python / FastAPI ===
+venv/
+.env
+.env.*
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+dist/
+build/
+
+# === Frontend (por si en el futuro usas bundlers) ===
+node_modules/
+.pnpm-store/
+.npm/
+.yarn/
+.cache/
+dist/
+build/
+.vite/
+.next/
+.out/
+.vercel/
+.turbo/
+
+# === Artefactos temporales ===
+*.swp
+*.swo
+*~
