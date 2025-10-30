@@ -1,108 +1,169 @@
 <!DOCTYPE html>
-<html lang="es" data-bs-theme="dark">
+<html lang="es" data-bs-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Calendario</title>
-     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-      rel="stylesheet"
-    />
-    <link href="./assets/css/styles.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <style>
+      body { min-height: 100vh; }
+      .calendar-table td, .calendar-table th {
+        width: 40px; height: 60px; vertical-align: top; position: relative;
+      }
+      .calendar-table td.selected { background: var(--bs-danger-bg-subtle, #ffeded); border-radius: 0.5rem; color: var(--bs-danger-text, #c00); }
+      .calendar-table td.today { border: 2px solid var(--bs-primary); border-radius: 0.5rem; }
+      .calendar-table .event-title { font-size: 0.88em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .calendar-table .event-liga { font-size: 0.76em; color: var(--bs-secondary-color,#888); }
+      .calendar-table .event-dot { position:absolute; right:6px; top:6px; width:8px; height:8px; background: var(--bs-danger); border-radius:50%; }
+    </style>
   </head>
   <body class="bg-body">
-    <nav class="navbar bg-body-tertiary border-bottom">
+    <nav class="navbar bg-body-tertiary border-bottom mb-3">
       <div class="container">
         <a class="navbar-brand" href="./index.html">Eventos</a>
         <div class="nav">
           <a class="nav-link" href="./estadisticas.html">Estadísticas</a>
           <a class="nav-link active" href="./calendario.html">Calendario</a>
           <a class="nav-link" href="./admin.html">Admin</a>
-          <button
-            id="themeToggle"
-            class="btn btn-outline-secondary"
-            type="button"
-            aria-label="Cambiar tema"
-          >
+          <button id="themeToggle" class="btn btn-outline-secondary ms-3" type="button" aria-label="Cambiar tema">
             <i class="bi bi-moon"></i>
           </button>
         </div>
       </div>
     </nav>
-
-    <main class="container my-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="d-flex gap-2 align-items-end">
-            <div>
-              <label class="form-label">Fecha</label>
-              <input id="date" type="date" class="form-control" />
-            </div>
-            <button id="go" class="btn btn-primary">Buscar</button>
-            <button id="clear" class="btn btn-outline-secondary">
-              Limpiar
-            </button>
-          </div>
-          <hr />
-          <div id="list" class="vstack gap-2"></div>
+    <main class="container py-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex gap-2 align-items-center">
+          <button id="prevMonth" class="btn btn-outline-secondary"><i class="bi bi-chevron-left"></i></button>
+        </div>
+        <h2 class="fw-bold mb-0" id="monthTitle"></h2>
+        <div class="d-flex gap-2 align-items-center">
+          <button id="refreshCal" class="btn btn-outline-primary" title="Actualizar"><i class="bi bi-arrow-clockwise"></i></button>
+          <button id="nextMonth" class="btn btn-outline-secondary"><i class="bi bi-chevron-right"></i></button>
         </div>
       </div>
+      <div class="table-responsive mb-4">
+        <table class="table calendar-table table-bordered text-center align-middle mb-0" id="calendarTable">
+          <thead>
+            <tr>
+              <th>LU</th><th>MA</th><th>MI</th><th>JU</th><th>VI</th><th>SA</th><th>DO</th>
+            </tr>
+          </thead>
+          <tbody id="calendarBody"></tbody>
+        </table>
+      </div>
+      <div id="selectedDayEvents"></div>
     </main>
-
     <script>
-      const API =
-        new URLSearchParams(location.search).get("api") ||
-        localStorage.getItem("API_BASE") ||
-        "http://127.0.0.1:8000";
-      const $ = (s) => document.querySelector(s);
-      async function safeFetch(u) {
-        const r = await fetch(u);
-        if (!r.ok) throw new Error(r.status);
-        return r.json();
-      }
+    const API = "http://127.0.0.1:8000";
+    const monthsEs = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
 
-      async function search() {
-        const val = $("#date").value;
-        const list = $("#list");
-        if (!val) {
-          list.innerHTML = `<div class="text-secondary">Selecciona una fecha.</div>`;
-          return;
-        }
-        const events = await safeFetch(`${API}/events?page=1&page_size=100`);
-        const m = events.filter(
-          (e) => (e.fecha_iso || "").slice(0, 10) === val
-        );
-        list.innerHTML =
-          m
-            .map(
-              (e) => `
-        <div class="border rounded p-2 d-flex justify-content-between align-items-center">
-          <div>
-            <div class="fw-semibold">${e.titulo}</div>
-            <div class="small text-secondary">${e.local} vs ${e.visita} · ${
-                e.liga
-              }</div>
-            <div class="small"><i class="bi bi-clock me-1"></i>${new Date(
-              e.fecha_iso
-            ).toLocaleString()}</div>
-          </div>
-        </div>`
-            )
-            .join("") ||
-          `<div class="text-secondary">Sin eventos ese día.</div>`;
-      }
-      document.getElementById("go").addEventListener("click", search);
-      document.getElementById("clear").addEventListener("click", () => {
-        $("#date").value = "";
-        $("#list").innerHTML = "";
+    let state = {
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      calendar: null,
+      selected: null
+    };
+
+    function pad(n) { return n.toString().padStart(2,'0'); }
+    function fetchCalendar() {
+      const y = state.year, m = state.month;
+      fetch(`${API}/calendar/events?year=${y}&month=${m}`)
+        .then(r => r.json()).then(data => { state.calendar = data; renderCalendar(); });
+    }
+    function renderCalendar() {
+      const y = state.year, m = state.month;
+      const {days=[]} = state.calendar || {};
+      document.getElementById('monthTitle').textContent = monthsEs[m-1] + ' ' + y;
+      // logica para el calendario
+      const startDate = new Date(`${y}-${pad(m)}-01T00:00:00`);
+      let startCol = (startDate.getDay() + 6) % 7; // 0=Mon, JS 0=Sun
+      let html = '<tr>' + '<td></td>'.repeat(startCol);
+      days.forEach((d,i) => {
+        const nn = Number(d.date.slice(-2));
+        const todayIso = (new Date()).toISOString().slice(0,10);
+        const isToday = d.date === todayIso;
+        const isSel = d.date === state.selected;
+        const hasEvents = (d.events||[]).length > 0;
+        html += `<td class="${isToday ? 'today' : ''} ${isSel ? 'selected':''}" data-date="${d.date}">
+          ${hasEvents ? '<span class="event-dot"></span>' : ''}
+          <div class="fw-bold">${nn}</div>
+          ${(d.events||[]).map(e=>`<div class=\"event-liga\">${e.liga}</div><div class=\"event-title event-item\" data-id=\"${e.id}\" data-date=\"${d.date}\" data-time=\"${e.time}\" data-liga=\"${e.liga}\" data-title=\"${e.title}\" data-deporte=\"${e.deporte}\" data-estadio=\"${e.estadio}\" data-local=\"${e.local}\" data-visita=\"${e.visita}\">${e.title}</div>`).join('')}
+        </td>`;
+        startCol++;
+        if (startCol%7===0) html+='</tr><tr>';
       });
-      document.getElementById("date").addEventListener("change", search);
+      html += '</tr>';
+      document.getElementById('calendarBody').innerHTML = html;
+      bindCellClicks();
+      renderSelectedDayEvents();
+    }
+    function bindCellClicks() {
+      document.querySelectorAll('[data-date]').forEach(cell => {
+        cell.onclick = () => {
+          state.selected = cell.getAttribute('data-date');
+          renderCalendar();
+        };
+      });
+      document.querySelectorAll('.event-item').forEach(item => {
+        item.onclick = (ev) => {
+          ev.stopPropagation();
+          const data = item.dataset;
+          state.selected = data.date;
+          // Panel detallado del evento seleccionado
+          const box = document.getElementById('selectedDayEvents');
+          const dt = new Date(data.date);
+          let html = `<div class=\"fw-bold mb-2 mt-2\">${dt.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</div>`;
+          html += `<div class=\"row g-2 mb-1\">`+
+                  `<div class=\"col-3 text-end text-secondary\">${data.time || ''}</div>`+
+                  `<div class=\"col-9 fw-semibold\">${data.title || ''}</div>`+
+                  `</div>`+
+                  `<div class=\"small text-secondary mb-1\">${data.liga || ''}${data.deporte? ' · '+data.deporte:''}${data.estado? ' · '+data.estado:''}</div>`+
+                  `<div class=\"small\">${data.local || ''}${(data.local && data.visita)?' vs ':''}${data.visita || ''}</div>`+
+                  `${data.estadio?`<div class=\\"small text-secondary\\"><i class=\\"bi bi-geo-alt me-1\\"></i>${data.estadio}</div>`:''}`+
+                  `${(data.ml && data.mv)?`<div class=\\"small text-secondary\\">Marcador: ${data.ml} - ${data.mv}</div>`:''}`+
+                  `${data.asistentes?`<div class=\\"small text-secondary\\">Asistentes: ${data.asistentes}</div>`:''}`;
+          box.innerHTML = html;
+          renderCalendar();
+        };
+      });
+    }
+    function renderSelectedDayEvents() {
+      const box = document.getElementById('selectedDayEvents');
+      if (!state.selected || !state.calendar) { box.innerHTML = ''; return; }
+      const day = state.calendar.days.find(d=>d.date===state.selected);
+      if (!day) { box.innerHTML = ''; return; }
+      const dt = new Date(state.selected);
+      let html = `<div class=\"fw-bold mb-2 mt-2\">${dt.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</div>`;
+      html += (day.events||[]).map(ev => `
+        <div class=\"row g-2 mb-1\">
+          <div class=\"col-3 text-end text-secondary\">${ev.time || ''}</div>
+          <div class=\"col-9 fw-semibold\">${ev.title || ''}</div>
+        </div>
+        <div class=\"small text-secondary mb-1\">${ev.liga || ''}${ev.deporte ? ' · '+ev.deporte : ''}${ev.estado ? ' · '+ev.estado : ''}</div>
+        <div class=\"small\">${ev.local || ''} ${(ev.local && ev.visita)?'vs':''} ${ev.visita || ''}</div>
+        ${ev.estadio ? `<div class=\\"small text-secondary\\"><i class=\\"bi bi-geo-alt me-1\\"></i>${ev.estadio}</div>` : ''}
+        ${(ev.marcador_local!=null && ev.marcador_visita!=null)? `<div class=\\"small text-secondary\\">Marcador: ${ev.marcador_local} - ${ev.marcador_visita}</div>`: ''}
+        ${ev.asistentes ? `<div class=\\"small text-secondary\\">Asistentes: ${ev.asistentes}</div>` : ''}
+      `).join('');
+      box.innerHTML = html;
+    }
+    document.getElementById('prevMonth').onclick = () => { state.month -= 1; if (state.month < 1) { state.month = 12; state.year--; } state.selected=null; fetchCalendar(); };
+    document.getElementById('nextMonth').onclick = () => { state.month += 1; if (state.month > 12) { state.month = 1; state.year++; } state.selected=null; fetchCalendar(); };
+    async function refreshAll(){ fetchCalendar(); }
+    (function init(){
+      // Se inicia en el mes actual y se elige la fecha actual
+      const today = new Date();
+      const iso = today.toISOString().slice(0,10);
+      if (state.year === today.getFullYear() && state.month === (today.getMonth()+1)) {
+        state.selected = iso;
+      }
+      fetchCalendar();
+    })();
+    document.getElementById('refreshCal').onclick = refreshAll;
+    window.addEventListener('focus', () => { refreshAll(); });
     </script>
-
     <script src="./assets/js/theme.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
   </body>

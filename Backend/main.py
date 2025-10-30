@@ -1,5 +1,6 @@
 # backend/main.py
 from typing import List, Optional, Dict
+from collections import defaultdict
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -90,6 +91,62 @@ def list_events(
         items = [e for e in items if e.liga.lower() == liga.lower()]
     start = (page - 1) * page_size
     return items[start:start + page_size]
+
+@app.get("/calendar/events")
+def calendar_events(year: int | None = None, month: int | None = None):
+    now = datetime.utcnow()
+    if not year:
+        year = now.year
+    if not month:
+        month = now.month
+
+    grouped = defaultdict(list)
+    for e in DB:
+        # Evitamos fechas malformadas
+        try:
+            dt = datetime.fromisoformat(e.fecha_iso.replace("Z", "+00:00"))
+        except Exception:
+            continue
+        if dt.year == year and dt.month == month:
+            grouped[dt.day].append({
+                "id": e.id,
+                "time": dt.strftime("%H:%M"),
+                "liga": e.liga,
+                "title": e.titulo,
+                "deporte": e.deporte,
+                "estadio": e.estadio,
+                "local": e.local,
+                "visita": e.visita,
+                "estado": e.estado,
+                "asistentes": e.asistentes,
+                "marcador_local": e.marcador_local,
+                "marcador_visita": e.marcador_visita,
+            })
+
+    from calendar import monthrange
+    last_day = monthrange(year, month)[1]
+    days = []
+    for d in range(1, last_day + 1):
+        days.append({
+            "date": f"{year:04d}-{month:02d}-{d:02d}",
+            "events": grouped.get(d, [])
+        })
+
+    return {"month": f"{year:04d}-{month:02d}", "days": days}
+
+@app.get("/calendar/index")
+def calendar_index():
+    buckets: Dict[tuple, int] = {}
+    for e in DB:
+        try:
+            dt = datetime.fromisoformat(e.fecha_iso.replace("Z", "+00:00"))
+        except Exception:
+            continue
+        key = (dt.year, dt.month)
+        buckets[key] = buckets.get(key, 0) + 1
+    items = [{"year": y, "month": m, "count": c} for (y, m), c in buckets.items()]
+    items.sort(key=lambda x: (x["year"], x["month"]))
+    return items
 
 @app.get("/events/{event_id}", response_model=Event)
 def get_event(event_id: int):
