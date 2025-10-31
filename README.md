@@ -69,7 +69,7 @@ Inspiración eventos (pantalla principal)
 Inspiración estadísticas
 
 <p align="center">
-    <img src="imagenesReadme/inspiracionEstadisticas.jpeg" width="500" alt="Imagen inspiración diseño para estadísticas">
+    <img src="src/img/inspiracionEstadisticas.jpeg" width="500" alt="Imagen inspiración diseño para estadísticas">
 </p>
 
 Inspiración calendario
