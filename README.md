@@ -6,6 +6,9 @@
 - Luis Eduardo Suarez Arroyo - 202717
 - Carlos Lugo Torres - 207647
 
+
+## Resumen del producto:
+
 ## Proyecto elegido
 El proyecto elegido fue <strong>página de eventos deportivos</strong> la cual está basada en un sitio que muestre eventos deportivos como partidos, torneos, competencias, etc donde se incluya información general, calendario y estadísticas.
 
@@ -22,6 +25,28 @@ El objetivo del proyecto es incorporar los temas vistos en clase y reforzar las 
 - Manejo de visualización de datos
 - Aplicar los fundamentos de HTML semántico y la estructura de documentación 
 - Programación de interactividad mediante el uso de JavaScript
+
+### Instrucciones de cómo levantar el frontend
+[Frontend/HOWTO_START_FRONTEND.md](https://github.com/marielamejia/Proyecto1-Desarrollo-web/blob/f021c660f3ae85905192911b94a7e3007b2ec5bd/Frontend/HOWTO_START_FRONTEND.md)
+
+### Instrucciones de cómo levantar el backend 
+ - El comando para levantar el servidor está aen este archivo:
+[HOWTO_START_BACKEND.md](https://github.com/marielamejia/Proyecto1-Desarrollo-web/blob/f021c660f3ae85905192911b94a7e3007b2ec5bd/Backend/HOWTO_START_BACKEND.md)
+
+## [Requirements.txt](https://github.com/marielamejia/Proyecto1-Desarrollo-web/blob/f021c660f3ae85905192911b94a7e3007b2ec5bd/Backend/requirements.txt)
+
+## Enlace a tu página web del cliente:
+- http://localhost:8080
+o si se alcanza a propagar por el DNS el dominio que compramos, deberia de ser aspi:
+- idw-topico-deportivo.site
+
+## Enlace a tu health endpoint principal de la API:
+- http://localhost:8080/health
+- http://localhost:8080/heartbeat
+o si se alcanza a propagar por el DNS el dominio que compramos, deberia de ser aspi:
+- idw-topico-deportivo.site/health
+  
+## [Sección de autores con una fotografía y su nombre de pila.](https://github.com/marielamejia/Proyecto1-Desarrollo-web/blob/f021c660f3ae85905192911b94a7e3007b2ec5bd/autores.html)
 
 # Proceso de elaboración del diseño (frontend)
 El proceso del diseño se inició eligiendo los colores que se usarían en la página web. Para ello, se investigó sobre la psicología de los colores, pues buscamos que nuestra página sea atractiva para los aficionados del deporte. 
