@@ -82,7 +82,7 @@ Inspiración calendario
 </p>
 
 ## Proceso elaboración eventos
-## Estructura general
+### Estructura general
 - Encabezado con título, subtítulo y un botón de alternancia de tema (luna/sol) que permite cambiar entre modo claro y oscuro.  
 - Barra de pestañas superiores (Eventos, Estadísticas, Calendario) con la pestaña de Eventos activa para indicar la sección actual.  
 - Bloque de filtros con:
@@ -96,9 +96,9 @@ Inspiración calendario
   - Fecha, sede y número de asistentes.  
   - Botón de acción “Ver Detalles”.  
 
-## Componentes utilizados
+### Componentes utilizados
 
-### Bootstrap 5.3.8
+#### Bootstrap 5.3.8
 - Sistema de grillas responsive (row, col) para disposición automática en distintas resoluciones.  
 - Componentes card, input-group, form-select, btn-group y utilidades de color (bg-body, text-body, border-secondary).  
 - Uso de clases rounded-4, p-3, my-4 para consistencia visual y accesibilidad.  
