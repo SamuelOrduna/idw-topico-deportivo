@@ -82,6 +82,48 @@ Inspiración calendario
 </p>
 
 ## Proceso elaboración eventos
+## Estructura general
+- Encabezado con título, subtítulo y un botón de alternancia de tema (luna/sol) que permite cambiar entre modo claro y oscuro.  
+- Barra de pestañas superiores (Eventos, Estadísticas, Calendario) con la pestaña de Eventos activa para indicar la sección actual.  
+- Bloque de filtros con:
+  - Buscador general.  
+  - Selects dependientes (Deporte → Liga).  
+  - Campos de fecha (“Desde” / “Hasta”).  
+  - Botones de Buscar y Limpiar.  
+- Zona principal: grid de tarjetas (cards) que muestran los eventos con detalles visuales:
+  - Nombre del evento, estado (Programado / En vivo / Finalizado).  
+  - Equipos o competidores, marcador (si aplica).  
+  - Fecha, sede y número de asistentes.  
+  - Botón de acción “Ver Detalles”.  
+
+## Componentes utilizados
+
+### Bootstrap 5.3.8
+- Sistema de grillas responsive (row, col) para disposición automática en distintas resoluciones.  
+- Componentes card, input-group, form-select, btn-group y utilidades de color (bg-body, text-body, border-secondary).  
+- Uso de clases rounded-4, p-3, my-4 para consistencia visual y accesibilidad.  
+
+#### Bootstrap Icons
+- Íconos representativos y funcionales:
+  - bi-funnel-fill → filtros.  
+  - bi-calendar-event → fechas.  
+  - bi-geo-alt → ubicaciones.  
+  - bi-people → asistentes.  
+  - bi-search → búsqueda.  
+
+### JavaScript (funcionalidad dinámica)
+- Carga inicial de datos (API).  
+- Validación de fechas con formato dd/mm/aaaa usando expresiones regulares.  
+- Filtro centralizado que combina búsqueda, deporte, liga y rango de fechas.  
+
+### Comportamiento del tema (claro / oscuro)
+- Si no existe preferencia guardada en localStorage, se activa modo oscuro por defecto.  
+- Botón con ícono de luna/sol alterna entre los modos y actualiza el atributo data-bs-theme del documento.  
+- Preferencia persistente en futuras sesiones mediante localStorage.  
+
+### Retos 
+- Validación correcta de fechas: implementación de parseDMY() y setValidity() con feedback visual.  
+- Sincronización del tema con otras secciones: reutilización del script ClaroObscuro.js compartido con otras vistas.   
 
 ## Proceso elaboración estadísticas
 ### Estructura general
