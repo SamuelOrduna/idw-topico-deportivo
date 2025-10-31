@@ -196,3 +196,64 @@ Inspiración calendario
 - No hay sincronización entre el día seleccionado en el calendario y la sección de detalles, esto se trato con el uso de `state` para mantener coherencia entre lo que se muetsra en calendario y en el panel de detalles.
 
 # Proceso de elaboración del funcionamiento (backend)
+
+## Diseño de API con FastAPI
+
+### Estructura
+- Framework: FastAPI con uso de Pydantic para un manejo de datos internos
+- BD: Una base de datos almacenada en memoria inicializada dentro del codigo de python con 10 eventos
+- Puertos: Puerto 8000 con CORS habilitado para todos los origenes
+
+### Llamadas de eventos
+- `GET /events` - Listar eventos (paginado, con filtros por deporte/liga/búsqueda)
+- `GET /events/{id}` - Obtener evento específico
+- `POST /events` - Crear nuevo evento
+- `PUT /events/{id}` - Actualizar evento
+
+### Llamadas de calendario
+- `GET /calendar/events` - Eventos agrupados por día del mes
+- `GET /calendar/index` - Meses disponibles con cantidad de eventos
+
+### Llamadas de estadísticas
+- `GET /stats/attendance-by-team` - Asistencia total por equipo
+- `GET /stats/event-status` - Distribución por estado
+- `GET /stats/standings` - Tabla de posiciones con puntos, goles y diferencia
+
+### Descripción de la API
+Esta API se diseño en mente para llenar el apartado de la información de los eventos deportivos que necesita el apartado de la visualización para procesar de manera más completa. Cada evento contiene: título, liga, deporte, equipos, fecha, estadio, asistentes, estado y marcadores opcionales. Con esto en mente, el API se consulta para poder mostrar estos valores dentro del apartado visual antes descrito.
+
+# Diseño de Java Script
+## Estructura
+- Archivos JS: 4 módulos principales que consumen la API FastAPI
+- Comunicación: Fetch API para peticiones HTTP asíncronas
+- Renderizado: Manipulación del DOM con JavaScript vanilla
+
+## Módulos por Página
+
+### `admin.js` - Gestión de Eventos
+- Consume endpoints CRUD (`POST /events`, `PUT /events/{id}`)
+- Formularios para crear y actualizar eventos
+- Validación de datos antes de enviar a la API
+- Manejo de respuestas y actualización de listas
+
+### `events.js` - Consulta de Eventos
+- Consume `GET /events` con filtros y paginación
+- Renderiza tarjetas de eventos con información completa
+- Implementa búsqueda y filtros dinámicos por deporte/liga
+- Gestiona navegación entre páginas de resultados
+
+### `statistics.js` - Visualizaciones
+- Consume endpoints de estadísticas (`/stats/*`)
+- Prepara datos para gráficos (Chart.js o similar)
+- Genera visualizaciones de asistencia por equipo
+- Renderiza gráficos de distribución de estados y tablas de posiciones
+
+### `calendar.js` - Calendario Dinámico
+- Consume `GET /calendar/events` para obtener eventos del mes
+- Renderiza tabla de calendario con eventos por día
+- Navegación entre meses (prev/next)
+- Panel lateral que muestra detalles de eventos del día seleccionado
+- Auto-actualización al cambiar de mes o seleccionar días
+
+## Descripción General
+Los módulos JavaScript actúan como capa de presentación, consumiendo la API REST para proporcionar interfaces interactivas. Cada módulo está especializado en su funcionalidad: administración, consulta, análisis estadístico y visualización temporal de eventos deportivos.
