@@ -28,7 +28,7 @@ El proceso del diseño se inició eligiendo los colores que se usarían en la p�
 
 Basándonos en la siguiente imagen, se eligieron los colores rojo, blanco y negro.
 <p align="center">
-    <img src="imagenesReadme/psicologiaColores.png" width="500" alt="Imagen mostrando significado de los colores en la psicología">
+    <img src="src/img/psicologiaColores.png" width="500" alt="Imagen mostrando significado de los colores en la psicología">
 </p>
 
 Justificación de la decisión: 
@@ -55,7 +55,7 @@ Inspiración estadísticas
 Inspiración calendario
 
 <p align="center">
-    <img src="imagenesReadme/inspiracionCalendarioOscuro.png" width="500" alt="Imagen inspiración diseño para calendario">
+    <img src="src/img/inspiracionCalendarioOscuro.png" width="500" alt="Imagen inspiración diseño para calendario">
 </p>
 
 <strong>Los diseños de inspiración (en modo claro) fueron los siguientes:</strong>
