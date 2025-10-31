@@ -1,13 +1,10 @@
 # Proyecto1-Desarrollo-web
 
 ### Integrantes
-Mariela Mejía Gutiérrez - 201373
-
-Samuel Rodrigo Orduña Ferreira - 207739
-
-Luis Eduardo Suarez Arroyo - 202717
-
-Carlos Lugo Torres - 207647
+- Mariela Mejía Gutiérrez - 201373
+- Samuel Rodrigo Orduña Ferreira - 207739
+- Luis Eduardo Suarez Arroyo - 202717
+- Carlos Lugo Torres - 207647
 
 ## Proyecto elegido
 El proyecto elegido fue <strong>página de eventos deportivos</strong> la cual está basada en un sitio que muestre eventos deportivos como partidos, torneos, competencias, etc donde se incluya información general, calendario y estadísticas.
