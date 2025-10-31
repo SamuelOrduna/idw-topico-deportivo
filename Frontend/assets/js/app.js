@@ -1,5 +1,3 @@
-// frontend/assets/js/app.js
-// Usa ?api=http://host:puerto para apuntar a otro backend, o guarda en localStorage.API_BASE.
 const API = (new URLSearchParams(location.search).get("api")) ||
             localStorage.getItem("API_BASE") || "http://127.0.0.1:8000";
 
@@ -45,7 +43,6 @@ async function load() {
     const rows = await safeFetch(`${API}/events?${params}`);
     $("#cards").innerHTML = rows.map(cardHTML).join("") || `<div class="text-secondary">Sin resultados.</div>`;
 
-    // Llenar selects básicos
     const all = await safeFetch(`${API}/events?page=1&page_size=100`);
     const deportes = [...new Set(all.map(e=>e.deporte))].sort();
     const ligas = [...new Set(all.map(e=>e.liga))].sort();
@@ -69,3 +66,47 @@ window.addEventListener("DOMContentLoaded", ()=>{
   $("#lig").addEventListener("change", ()=>load());
   load();
 });
+
+
+(function(){
+  const layer = document.getElementById('spotlight');
+  const grid  = document.getElementById('cards');
+  if(!layer || !grid) return;
+
+  function isDark() {
+    return document.documentElement.getAttribute('data-bs-theme') === 'dark';
+  }
+
+  function enable() {
+    grid.addEventListener('mouseenter', show);
+    grid.addEventListener('mouseleave', hide);
+    window.addEventListener('pointermove', update, {passive:true});
+    window.addEventListener('touchmove',  update, {passive:true});
+  }
+
+  function disable() {
+    hide();
+    grid.removeEventListener('mouseenter', show);
+    grid.removeEventListener('mouseleave', hide);
+    window.removeEventListener('pointermove', update);
+    window.removeEventListener('touchmove', update);
+  }
+
+  function show() { layer.style.opacity = '1'; }
+  function hide() { layer.style.opacity = '0'; }
+
+  function update(e){
+    const x = e.clientX ?? e.touches?.[0]?.clientX;
+    const y = e.clientY ?? e.touches?.[0]?.clientY;
+    if (x==null || y==null) return;
+    layer.style.setProperty('--sx', x + 'px');
+    layer.style.setProperty('--sy', y + 'px');
+  }
+
+  if (isDark()) enable();
+
+  window.addEventListener('themechange', () => {
+    if (isDark()) enable();
+    else disable();
+  });
+})();

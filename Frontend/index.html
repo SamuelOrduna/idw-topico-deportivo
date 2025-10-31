@@ -65,9 +65,27 @@
       <div class="row g-3" id="cards"></div>
     </main>
 
+    <div id="spotlight" class="spotlight-layer"></div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/theme.js"></script>
-
+    <script>
+      document.addEventListener("copy", () => {
+        const toast = document.createElement("div");
+        toast.textContent = "📋 Copiado al portapapeles";
+        toast.style.position = "fixed";
+        toast.style.bottom = "20px";
+        toast.style.left = "50%";
+        toast.style.transform = "translateX(-50%)";
+        toast.style.background = "var(--bs-primary)";
+        toast.style.color = "white";
+        toast.style.padding = "8px 16px";
+        toast.style.borderRadius = "8px";
+        toast.style.zIndex = "9999";
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 1500);
+      });
+    </script>
   </body>
 </html>

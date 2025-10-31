@@ -1,4 +1,3 @@
-// frontend/assets/js/stats.js
 const API = (new URLSearchParams(location.search).get("api")) ||
             localStorage.getItem("API_BASE") || "http://127.0.0.1:8000";
 const $ = s => document.querySelector(s);
@@ -8,7 +7,6 @@ async function safeFetch(u){ const r = await fetch(u); if(!r.ok) throw new Error
 let barChart, pieChart;
 
 function theme() {
-  // lee variables CSS para que coincida la gráfica
   const cs = getComputedStyle(document.documentElement);
   return {
     text: cs.getPropertyValue('--text-0').trim() || '#f4f6f8',
@@ -26,7 +24,6 @@ async function loadCharts(){
     Chart.defaults.borderColor = t.grid;
   }
 
-  // ---- Asistencia (bar)
   try{
     const att = await safeFetch(`${API}/stats/attendance-by-team`);
     const ctx1 = document.getElementById("bar").getContext("2d");
@@ -53,7 +50,6 @@ async function loadCharts(){
     $("#attMeta").textContent = `Actualizado: ${new Date(att.updated).toLocaleString()}`;
   }catch(e){ $("#attMeta").textContent = "Error de datos."; }
 
-  // ---- Estado (pie)
   try{
     const st = await safeFetch(`${API}/stats/event-status`);
     const ctx2 = document.getElementById("pie").getContext("2d");
@@ -72,7 +68,6 @@ async function loadCharts(){
     $("#stMeta").textContent = `Actualizado: ${new Date(st.updated).toLocaleString()}`;
   }catch(e){ $("#stMeta").textContent = "Error de datos."; }
 
-  // ---- Clasificación (tabla)
   try{
     const table = await safeFetch(`${API}/stats/standings?deporte=F%C3%BAtbol&liga=La%20Liga`);
     const tbody = $("#standings");

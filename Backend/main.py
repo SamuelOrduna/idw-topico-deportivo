@@ -1,4 +1,3 @@
-# backend/main.py
 from typing import List, Optional, Dict
 from collections import defaultdict
 from fastapi import FastAPI, HTTPException, Query
@@ -102,7 +101,6 @@ def calendar_events(year: int | None = None, month: int | None = None):
 
     grouped = defaultdict(list)
     for e in DB:
-        # Evitamos fechas malformadas
         try:
             dt = datetime.fromisoformat(e.fecha_iso.replace("Z", "+00:00"))
         except Exception:

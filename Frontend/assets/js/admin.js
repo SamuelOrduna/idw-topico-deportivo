@@ -1,4 +1,3 @@
-// frontend/assets/js/admin.js
 const API = (new URLSearchParams(location.search).get("api")) ||
             localStorage.getItem("API_BASE") || "http://127.0.0.1:8000";
 const $ = s => document.querySelector(s);

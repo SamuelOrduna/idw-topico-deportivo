@@ -76,9 +76,8 @@
       const y = state.year, m = state.month;
       const {days=[]} = state.calendar || {};
       document.getElementById('monthTitle').textContent = monthsEs[m-1] + ' ' + y;
-      // logica para el calendario
       const startDate = new Date(`${y}-${pad(m)}-01T00:00:00`);
-      let startCol = (startDate.getDay() + 6) % 7; // 0=Mon, JS 0=Sun
+      let startCol = (startDate.getDay() + 6) % 7; 
       let html = '<tr>' + '<td></td>'.repeat(startCol);
       days.forEach((d,i) => {
         const nn = Number(d.date.slice(-2));
@@ -111,7 +110,6 @@
           ev.stopPropagation();
           const data = item.dataset;
           state.selected = data.date;
-          // Panel detallado del evento seleccionado
           const box = document.getElementById('selectedDayEvents');
           const dt = new Date(data.date);
           let html = `<div class=\"fw-bold mb-2 mt-2\">${dt.toLocaleDateString('es-ES',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</div>`;
@@ -153,7 +151,6 @@
     document.getElementById('nextMonth').onclick = () => { state.month += 1; if (state.month > 12) { state.month = 1; state.year++; } state.selected=null; fetchCalendar(); };
     async function refreshAll(){ fetchCalendar(); }
     (function init(){
-      // Se inicia en el mes actual y se elige la fecha actual
       const today = new Date();
       const iso = today.toISOString().slice(0,10);
       if (state.year === today.getFullYear() && state.month === (today.getMonth()+1)) {

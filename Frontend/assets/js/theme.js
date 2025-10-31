@@ -1,6 +1,5 @@
-// assets/js/theme.js
 (function () {
-  const KEY = "theme"; // "dark" | "light"
+  const KEY = "theme"; 
   const root = document.documentElement;
   const btn  = document.getElementById("themeToggle");
 
@@ -18,10 +17,8 @@
   function apply(theme){
     root.setAttribute("data-bs-theme", theme);
     localStorage.setItem(KEY, theme);
-    // icono opcional
     const i = btn?.querySelector("i");
     if (i){ i.className = theme === "dark" ? "bi bi-sun" : "bi bi-moon"; }
-    // Notificar a otros scripts (p.ej. redibujar gráficas)
     window.dispatchEvent(new Event("themechange"));
   }
 })();

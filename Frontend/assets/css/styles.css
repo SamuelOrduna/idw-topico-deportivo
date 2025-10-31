@@ -1,13 +1,12 @@
-/*Arena Glory ====== */
+
 :root {
-  /* Paleta base */
-  --bg-0: #0f1113; /* page */
-  --bg-1: #14171a; /* card */
-  --bg-2: #191c20; /* inputs */
-  --line: #272b30; /* borders */
-  --text-0: #f4f6f8; /* main text */
-  --text-1: #c6cbd2; /* secondary */
-  --brand: #e50914; /* rojo principal */
+  --bg-0: #0f1113; 
+  --bg-1: #14171a; 
+  --bg-2: #191c20; 
+  --line: #272b30; 
+  --text-0: #f4f6f8;
+  --text-1: #c6cbd2; 
+  --brand: #e50914; 
   --brand-600: #cc0b13;
   --brand-700: #b40a12;
   --muted: #8b949e;
@@ -15,7 +14,6 @@
   --warning: #f59e0b;
   --danger: #e50914;
 
-  /* Radios y sombras  */
   --r-lg: 16px;
   --r-md: 12px;
   --r-sm: 10px;
@@ -23,13 +21,11 @@
   --shadow-2: 0 10px 30px rgba(0, 0, 0, 0.45);
 }
 
-/* Bootstrap dark mode */
 html[data-bs-theme="dark"] body {
   background: var(--bg-0);
   color: var(--text-0);
 }
 
-/* ===== Nav y loas Tabs ===== */
 .navbar.bg-body-tertiary {
   background: linear-gradient(180deg, #121418, #0f1113) !important;
   border-color: var(--line) !important;
@@ -55,7 +51,6 @@ html[data-bs-theme="dark"] body {
   border-color: var(--brand-700);
 }
 
-/* ===== Cards ===== */
 .card,
 .card-raised {
   background: var(--bg-1);
@@ -69,7 +64,6 @@ html[data-bs-theme="dark"] body {
   transition: 0.2s ease;
 }
 
-/* ===== Inputs y las de Selects.. ===== */
 .form-control,
 .form-select,
 .input-group-text {
@@ -87,7 +81,6 @@ html[data-bs-theme="dark"] body {
   box-shadow: 0 0 0 0.2rem rgba(229, 9, 20, 0.18);
 }
 
-/* ===== Botones ===== */
 .btn-primary {
   --bs-btn-bg: var(--brand);
   --bs-btn-border-color: var(--brand-600);
@@ -160,8 +153,6 @@ html[data-bs-theme="dark"] body {
   border-radius: 999px;
   display: inline-block;
 }
-
-/* ===== Tema dark ===== */
 
 :root[data-bs-theme="light"] {
   --bg-0: #f6f7f9;
@@ -336,4 +327,26 @@ body {
 .chart-pie-sm canvas {
   width: 100% !important;
   height: 280px !important;
+}
+
+
+[data-bs-theme="dark"] .spotlight-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  --dim: rgba(0,0,0,.55);
+  --size: 180px;
+  background: radial-gradient(
+    circle var(--size) at var(--sx, 50%) var(--sy, 50%),
+    transparent 0%,
+    transparent 60%,
+    var(--dim) 61%
+  );
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+@media (prefers-reduced-motion: reduce){
+  [data-bs-theme="dark"] .spotlight-layer { transition: none; }
 }
