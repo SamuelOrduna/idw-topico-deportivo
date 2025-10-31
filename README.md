@@ -157,4 +157,42 @@ Inspiración calendario
 
 ## Proceso elaboración calendario
 
+### Estructura general
+- Botón de tema (luna/sol) en la navbar que alterna entre modo claro y oscuro.
+- Controles de navegación del calendario:
+    - Flechas para cambiar entre meses.
+    - Título central con mes y año actual ("octubre 2025").
+    - Botón de actualización para recargar eventos desde el servidor. (Se puede usar el botón para observar actualizaciones en los eventos)
+- Panel principal dividido en dos secciones:
+    - Tabla de calendario con celda por día que se pueden seleccionar para ver detalles de los eventos de ese día.
+    - Sección que muestra los detalles de los eventos en ese día.
+
+### Componentes
+- Bootstrap 5.3.8: grid system, botones, tablas y utilidades responsivas para el layout.
+- Bootstrap Icons: iconos de flechas y actualizar.
+- Tabla calendario personalizada:
+    - Celdas con tamaño fijo (40x60px) y posición relativa para indicadores visuales.
+    - Punto rojo en esquina superior derecha de la celda delcalendario cuando hay eventos programados en el mes mostrado.
+    - Clases dinámicas: `.today` (un borde más grueso para día actual), `.selected` (un fondo rojo para el día seleccionado).
+- JavaScript:
+    - Comunicación con API REST (FastAPI en `localhost:8000`) mediante `fetch()`.
+    - Estado reactivo con objeto `state` que mantiene año, mes, datos del calendario y fecha seleccionada.
+    - Renderizado dinámico del calendario calculando día de inicio de semana y distribuyendo eventos en celdas.
+
+### Responsividad
+- Diseño mobile-first con `.table-responsive` para scroll horizontal en pantallas pequeñas.
+- Contenedor con clase `.container` de Bootstrap para márgenes adaptativos.
+- Truncamiento de texto en eventos con `text-overflow: ellipsis` para mantener diseño compacto.
+
+### Comportamiento del tema
+- Variables CSS de Bootstrap se ajustan automáticamente al tema activo mediante pero el default es oscuro.
+- Iconos y colores de contraste se adaptan usando variables CSS que se usan en los otros apartados de la página.
+
+
+### Retos
+- Alineación del calendario calcular correctamente el día de inicio considerando que JavaScript usa Domingo=0 pero la tabla muestra Lunes como primer día (solución: `(startDate.getDay() + 6) % 7`).
+- Evitar conflictos de eventos con celdas y evenetos, se lucion con eluso de `stopPropagation()` evitando activaciones anidadas.
+- Datos faltantes en eventos, esto se soluciona al agregar metodos de renderizado dinamico que se adecuan a los datos que hay del evento.
+- No hay sincronización entre el día seleccionado en el calendario y la sección de detalles, esto se trato con el uso de `state` para mantener coherencia entre lo que se muetsra en calendario y en el panel de detalles.
+
 # Proceso de elaboración del funcionamiento (backend)

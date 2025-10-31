@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Calendario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <link href="./assets/css/styles.css" rel="stylesheet" />
+  </head>
+  <body class="bg-body">
+    <nav class="navbar bg-body-tertiary border-bottom">
+      <div class="container">
+        <a class="navbar-brand" href="./index.html">Eventos</a>
+        <div class="nav">
+          <a class="nav-link" href="./estadisticas.html">Estadísticas</a>
+          <a class="nav-link active" href="./calendario.html">Calendario</a>
+          <a class="nav-link" href="./admin.html">Admin</a>
+          <button id="themeToggle" class="btn btn-outline-secondary" type="button" aria-label="Cambiar tema">
+            <i class="bi bi-moon"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container my-4">
+      <div class="row g-4">
+        <div class="col-12 col-lg-8">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <button id="prevMonth" class="btn btn-sm btn-outline-secondary">
+                <i class="bi bi-chevron-left"></i>
+              </button>
+              <h5 class="mb-0" id="monthTitle"></h5>
+              <div class="d-flex gap-2">
+                <button id="refreshCal" class="btn btn-sm btn-outline-primary" title="Actualizar">
+                  <i class="bi bi-arrow-clockwise"></i>
+                </button>
+                <button id="nextMonth" class="btn btn-sm btn-outline-secondary">
+                  <i class="bi bi-chevron-right"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table calendar-table table-bordered text-center align-middle mb-0" id="calendarTable">
+                  <thead>
+                    <tr>
+                      <th>LU</th><th>MA</th><th>MI</th><th>JU</th><th>VI</th><th>SA</th><th>DO</th>
+                    </tr>
+                  </thead>
+                  <tbody id="calendarBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-4">
+          <div class="card h-100">
+            <div class="card-header">Eventos del día</div>
+            <div class="card-body" id="selectedDayEvents">
+              <p class="text-secondary small mb-0">Selecciona un día para ver sus eventos</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/js/theme.js"></script>
+    <script src="./assets/js/calendar.js"></script>
+    <script>
+      window.CalendarPage?.init();
+    </script>
+  </body>
+</html>

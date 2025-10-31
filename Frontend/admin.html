@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Admin</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="./assets/css/styles.css" rel="stylesheet" />
+  </head>
+  <body class="bg-body">
+    <nav class="navbar bg-body-tertiary border-bottom">
+      <div class="container">
+        <a class="navbar-brand" href="./index.html">Eventos</a>
+        <div class="nav">
+          <a class="nav-link" href="./estadisticas.html">Estadísticas</a>
+          <a class="nav-link" href="./calendario.html">Calendario</a>
+          <a class="nav-link active" href="./admin.html">Admin</a>
+          <button
+            id="themeToggle"
+            class="btn btn-outline-secondary"
+            type="button"
+            aria-label="Cambiar tema"
+          >
+            <i class="bi bi-moon"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container my-4">
+      <div class="row g-4">
+        <div class="col-12 col-lg-5">
+          <div class="card">
+            <div class="card-header">Nuevo / Editar evento</div>
+            <div class="card-body">
+              <form id="form" class="vstack gap-2">
+                <input id="id" type="hidden" />
+                <input
+                  id="titulo"
+                  class="form-control"
+                  placeholder="Título"
+                  required
+                />
+                <div class="row">
+                  <div class="col-6">
+                    <input
+                      id="deporte"
+                      class="form-control"
+                      placeholder="Deporte"
+                      value="Fútbol"
+                    />
+                  </div>
+                  <div class="col-6">
+                    <input
+                      id="liga"
+                      class="form-control"
+                      placeholder="Liga"
+                      value="La Liga"
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <input
+                      id="local"
+                      class="form-control"
+                      placeholder="Local"
+                    />
+                  </div>
+                  <div class="col-6">
+                    <input
+                      id="visita"
+                      class="form-control"
+                      placeholder="Visita"
+                    />
+                  </div>
+                </div>
+                <input
+                  id="fecha_iso"
+                  class="form-control"
+                  placeholder="2025-06-14T21:00:00Z"
+                />
+                <input
+                  id="estadio"
+                  class="form-control"
+                  placeholder="Estadio"
+                />
+                <div class="row">
+                  <div class="col-6">
+                    <input
+                      id="asistentes"
+                      type="number"
+                      class="form-control"
+                      placeholder="Asistentes"
+                      value="10000"
+                    />
+                  </div>
+                  <div class="col-6">
+                    <select id="estado" class="form-select">
+                      <option>Programado</option>
+                      <option>En Vivo</option>
+                      <option>Finalizado</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <input
+                      id="marcador_local"
+                      type="number"
+                      class="form-control"
+                      placeholder="Goles local"
+                    />
+                  </div>
+                  <div class="col-6">
+                    <input
+                      id="marcador_visita"
+                      type="number"
+                      class="form-control"
+                      placeholder="Goles visita"
+                    />
+                  </div>
+                </div>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-primary" type="submit">Guardar</button>
+                  <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    id="clear"
+                  >
+                    Limpiar
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-7">
+          <div class="card">
+            <div class="card-header">Eventos</div>
+            <div class="table-responsive">
+              <table class="table table-sm mb-0">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Título</th>
+                    <th>Liga</th>
+                    <th>Estado</th>
+                    <th class="text-end">Asist.</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="./assets/js/admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./assets/js/theme.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
