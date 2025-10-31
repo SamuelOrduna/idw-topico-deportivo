@@ -173,6 +173,9 @@ html[data-bs-theme="dark"] body {
   --r-sm: 10px;
   --shadow-1: 0 6px 18px rgba(16, 24, 40, 0.06);
   --shadow-2: 0 12px 32px rgba(16, 24, 40, 0.1);
+  --accent-blue: #007bff;
+  --accent-red: #dc4c3e;
+  --accent-red-hover: #c44236;
 }
 :root[data-bs-theme="dark"] {
   --bg-0: #0f1113;
@@ -193,6 +196,9 @@ html[data-bs-theme="dark"] body {
   --r-sm: 10px;
   --shadow-1: 0 6px 20px rgba(0, 0, 0, 0.35);
   --shadow-2: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --accent-blue: #007bff;
+  --accent-red: #dc4c3e;
+  --accent-red-hover: #c44236;
 }
 
 body {
@@ -349,4 +355,51 @@ body {
 
 @media (prefers-reduced-motion: reduce){
   [data-bs-theme="dark"] .spotlight-layer { transition: none; }
+}
+
+.calendar-table td.selected { 
+  background: rgba(220, 76, 62, 0.15); 
+  border-radius: 0.375rem; 
+  color: var(--accent-red); 
+}
+.calendar-table td.today { 
+  border: 5px solid var(--accent-blue); 
+  border-radius: 0.5rem; 
+}
+.calendar-table .event-title { 
+  font-size: 0.75rem; 
+  white-space: nowrap; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}
+.calendar-table .event-liga { 
+  font-size: 0.65rem; 
+  color: var(--bs-secondary-color,#888); 
+}
+.calendar-table .event-dot { 
+  position:absolute; 
+  right:6px; 
+  top:6px; 
+  width:8px; 
+  height:8px; 
+  background: var(--accent-red); 
+  border-radius:50%; 
+}
+.card { background: var(--bs-body-bg); border: 1px solid var(--bs-border-color); }
+.card-header { 
+  background: var(--bs-body-bg); 
+  border-bottom: 1px solid var(--bs-border-color);
+  font-weight: 500;
+}
+.nav-link.active {
+  background-color: var(--accent-red) !important;
+  color: white !important;
+}
+.btn-outline-primary {
+  --bs-btn-color: var(--accent-red);
+  --bs-btn-border-color: var(--accent-red);
+  --bs-btn-hover-bg: var(--accent-red);
+  --bs-btn-hover-border-color: var(--accent-red);
+  --bs-btn-active-bg: var(--accent-red-hover);
+  --bs-btn-active-border-color: var(--accent-red-hover);
 }
