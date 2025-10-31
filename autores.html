@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Autores</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f8f9fa;
+        color: #222;
+        margin: 0;
+        padding: 40px;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .autores {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .autor {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        text-align: center;
+        transition: transform 0.2s ease;
+      }
+
+      .autor:hover {
+        transform: translateY(-4px);
+      }
+
+      .autor img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+
+      .autor p {
+        margin-top: 10px;
+        font-weight: bold;
+        color: #333;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Autores del Proyecto</h1>
+
+    <section class="autores">
+      <div class="autor">
+        <img src="src/img/autores/Carlos.jpg" alt="Foto de Carlos" />
+        <p>Carlos</p>
+      </div>
+
+      <div class="autor">
+        <img src="src/img/autores/Luis.jpg" alt="Foto de Luis" />
+        <p>Luis</p>
+      </div>
+
+      <div class="autor">
+        <img src="src/img/autores/Mariela.jpg" alt="Foto de Mariela" />
+        <p>Mariela</p>
+      </div>
+
+      <div class="autor">
+        <img src="src/img/autores/Samuel.jpg" alt="Foto de Samuel" />
+        <p>Samuel</p>
+      </div>
+    </section>
+  </body>
+</html>
