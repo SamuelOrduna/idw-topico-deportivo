@@ -43,13 +43,13 @@ Una vez eligiendo los colores, pasamos al diseño gráfico de la interfaz. Para 
 Inspiración eventos (pantalla principal)
 
 <p align="center">
-    <img src="imagenesReadme/inspiracionEventosOscuro.png" width="500" alt="Imagen inspiración diseño para eventos (pantalla principal)">
+    <img src="src/img/inspiracionEventosOscuro.png" width="500" alt="Imagen inspiración diseño para eventos (pantalla principal)">
 </p>
 
 Inspiración estadísticas
 
 <p align="center">
-    <img src="imagenesReadme/inspiracionEstadisticasOscuro.png" width="500" alt="Imagen inspiración diseño para estadísticas">
+    <img src="src/img/inspiracionEstadisticasOscuro.png" width="500" alt="Imagen inspiración diseño para estadísticas">
 </p>
 
 Inspiración calendario
@@ -63,7 +63,7 @@ Inspiración calendario
 Inspiración eventos (pantalla principal)
 
 <p align="center">
-    <img src="imagenesReadme/inspiracionEventos.jpeg" width="500" alt="Imagen inspiración diseño para eventos (pantalla principal)">
+    <img src="src/img/inspiracionEventos.jpeg" width="500" alt="Imagen inspiración diseño para eventos (pantalla principal)">
 </p>
 
 Inspiración estadísticas
@@ -75,7 +75,7 @@ Inspiración estadísticas
 Inspiración calendario
 
 <p align="center">
-    <img src="imagenesReadme/inspiracionCalendario.jpeg" width="500" alt="Imagen inspiración diseño para calendario">
+    <img src="src/img/inspiracionCalendario.jpeg" width="500" alt="Imagen inspiración diseño para calendario">
 </p>
 
 ## Proceso elaboración eventos
